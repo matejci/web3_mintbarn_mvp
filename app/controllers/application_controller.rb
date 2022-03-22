@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   before_action :validate_app_token, unless: :known_agents
-  before_action :set_current_user, unless: :known_agents
+  # before_action :set_current_user, unless: :known_agents
+  before_action :set_current_wallet_account, unless: :known_agents
 
   private
 
@@ -30,6 +31,10 @@ class ApplicationController < ActionController::Base
 
     @current_user = user_session.user
     # response.set_header('UNREAD-NOTIFICATIONS-COUNT', @current_user&.unread_notifications_count)
+  end
+
+  def set_current_wallet_account
+    @current_wallet = WalletAccount.find_by(address: request.headers['WALLET-ADDRESS'])
   end
 
   def user_logged_in?

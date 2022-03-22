@@ -55,15 +55,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_095948) do
     t.index ["app_id"], name: "index_apps_on_app_id"
   end
 
-  create_table "chain_networks", force: :cascade do |t|
+  create_table "chains", force: :cascade do |t|
     t.string "name"
+    t.string "rpc_url"
+    t.string "block_explorer_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_chain_networks_on_name", unique: true
+    t.index ["name"], name: "index_chains_on_name", unique: true
   end
 
-  create_table "chain_networks_wallet_accounts", id: false, force: :cascade do |t|
-    t.bigint "chain_network_id"
+  create_table "chains_wallet_accounts", id: false, force: :cascade do |t|
+    t.bigint "chain_id"
     t.bigint "wallet_account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -101,12 +103,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_095948) do
     t.string "description"
     t.decimal "balance"
     t.decimal "usd_balance"
-    t.bigint "chain_network_id"
+    t.bigint "chain_id"
     t.bigint "wallet_account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chain_network_id"], name: "index_tokens_on_chain_network_id"
-    t.index ["name", "chain_network_id", "wallet_account_id"], name: "index_tokens_on_name_and_chain_network_id_and_wallet_account_id", unique: true
+    t.index ["chain_id"], name: "index_tokens_on_chain_id"
+    t.index ["name", "chain_id", "wallet_account_id"], name: "index_tokens_on_name_and_chain_id_and_wallet_account_id", unique: true
     t.index ["wallet_account_id"], name: "index_tokens_on_wallet_account_id"
   end
 
@@ -146,6 +148,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_095948) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "sessions", "users"
-  add_foreign_key "tokens", "chain_networks"
+  add_foreign_key "tokens", "chains"
   add_foreign_key "tokens", "wallet_accounts"
 end

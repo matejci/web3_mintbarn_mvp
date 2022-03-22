@@ -157,6 +157,9 @@ Style/TrivialAccessors:
 Style/InverseMethods:
   Enabled: false
 
+Style/HashSyntax:
+  Enabled: false
+
 Performance/BindCall:
   Enabled: true
 

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       resources :users, only: :none do
         get :profile, on: :collection
       end
+
+      resources :wallets, only: :create
     end
 
     # scope module: 'v2', constraints: ApiConstraints.new(version: 2) do

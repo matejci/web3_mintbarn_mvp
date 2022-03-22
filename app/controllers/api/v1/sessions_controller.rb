@@ -3,7 +3,7 @@
 module Api
   module V1
     class SessionsController < BaseController
-      skip_before_action :set_current_user
+      # skip_before_action :set_current_user # TODO, uncomment if Users are used
 
       def create
         user = Auth::LoginService.new(id: params[:id], password: params[:password]).call

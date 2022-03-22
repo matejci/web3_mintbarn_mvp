@@ -6,7 +6,7 @@ class CreateTokens < ActiveRecord::Migration[7.0]
       t.string :description
       t.decimal :balance
       t.decimal :usd_balance
-      t.references :chain_network, foreign_key: true, index: true
+      t.references :chain, foreign_key: true, index: true
       t.references :wallet_account, foreign_key: true, index: true
       t.timestamps
     end

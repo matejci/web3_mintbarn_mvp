@@ -14,9 +14,10 @@
 #
 class WalletAccount < ApplicationRecord
   belongs_to :user, optional: true # for now, this is optional. once we introduce Users and connect it with WalletAccount, then add FK user_id
-  has_and_belongs_to_many :networks, class_name: 'ChainNetwork'
+  has_and_belongs_to_many :chains
 
-  validates :wallet_name, :account_name, :address, presence: true
-  validates :account_name, uniqueness: { scope: :wallet_name }
+  # validates :wallet_name, :account_name, :address, presence: true
+  validates :wallet_name, :address, presence: true
+  validates :account_name, uniqueness: { scope: :wallet_name }, allow_nil: true
   validates :address, uniqueness: true
 end
