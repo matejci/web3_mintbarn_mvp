@@ -21,7 +21,8 @@ module Auth
       app = App.active.find_by(app_id: app_id)
 
       raise ActionController::BadRequest, 'Invalid APP ID' unless app
-      raise ActionController::BadRequest, 'Wrong APP version' unless version_supported?(app)
+
+      # raise ActionController::BadRequest, 'Wrong APP version' unless version_supported?(app)
 
       decoded_token = Auth::JwtDecodeService.new(app_type: app.app_type, token: app_token, user_agent: user_agent, token_type: 'APP').call
 
