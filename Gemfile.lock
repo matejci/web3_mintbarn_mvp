@@ -307,7 +307,6 @@ DEPENDENCIES
   redis (~> 4.0)
   rubocop-performance
   rubocop-rails
-  ruby-vips
   selenium-webdriver
   sidekiq
   sprockets-rails
