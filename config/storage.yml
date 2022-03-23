@@ -13,6 +13,7 @@ amazon:
   secret_access_key: <%= ENV.fetch('AWS_SECRET_ACCESS_KEY') %>
   region: us-west-1
   bucket: mynftstats-<%= Rails.env %>
+  public: true
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
