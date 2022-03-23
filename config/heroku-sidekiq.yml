@@ -1,0 +1,9 @@
+---
+:timeout: 25
+:concurrency: <%= ENV.fetch('SIDEKIQ_CONCURRENCY', 5) %>
+:queues:
+  - model_reindex
+  - push_notifications
+  - default
+  - cron_jobs
+  - mailers

@@ -23,6 +23,9 @@ Performance:
 Style/AndOr:
   Enabled: true
 
+Layout/AccessModifierIndentation:
+  Enabled: false
+
 # Align `when` with `case`.
 Layout/CaseIndentation:
   Enabled: true
@@ -54,6 +57,9 @@ Style/MethodDefParentheses:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
+  Exclude:
+    - '**/db/**/*'
+    - '**/test/**/*'
 
 Style/RedundantFreeze:
   Enabled: true
@@ -70,9 +76,16 @@ Layout/SpaceInsideBlockBraces:
 # Check quotes usage according to lint rule below.
 Style/StringLiterals:
   Enabled: true
+  Exclude:
+    - '**/db/**/*'
+    - '**/test/**/*'
 
 Style/SymbolArray:
   Enabled: false
+
+Style/WordArray:
+  Exclude:
+    - '**/db/**/*'
 
 # Detect hard tabs, no hard tabs.
 Layout/IndentationStyle:
@@ -204,6 +217,10 @@ Rails/FindEach:
 
 Style/CommentedKeyword:
   Enabled: false
+
+Style/NumericLiterals:
+  Exclude:
+    - '**/db/**/*'
 
 Naming/VariableNumber:
   Enabled: false

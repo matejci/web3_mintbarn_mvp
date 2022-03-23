@@ -31,6 +31,7 @@ module Wallets
       wa = WalletAccount.find_or_create_by(wallet_name: wallet_name, address: address)
       wa.update(account_name: account_name) if account_name
       wa.chains << network_chain
+      wa.id
     end
   end
 end

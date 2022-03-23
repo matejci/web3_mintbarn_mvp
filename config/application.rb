@@ -20,5 +20,12 @@ module Web3Mvp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.action_controller.asset_host = ENV['URL_BASE']
+    config.action_mailer.asset_host = ENV['URL_BASE']
+
+    config.active_job.queue_adapter = :sidekiq
+
+    config.action_cable.disable_request_forgery_protection = true
   end
 end

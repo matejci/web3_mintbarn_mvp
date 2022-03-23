@@ -28,7 +28,9 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bugsnag', '~> 6.13', '>= 6.13.1'
 gem 'device_detector'
 gem 'dotenv-rails'
+gem 'faraday'
 gem 'jwt'
+gem 'sidekiq'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
