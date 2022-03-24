@@ -232,3 +232,6 @@ Rails/Output:
   Exclude:
       - 'app/channels/room_channel.rb'
       - 'app/channels/room_list_channel.rb'
+
+Rails/I18nLocaleTexts:
+  Enabled: false

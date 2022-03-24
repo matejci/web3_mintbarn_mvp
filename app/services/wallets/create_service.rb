@@ -2,9 +2,8 @@
 
 module Wallets
   class CreateService
-    def initialize(address:, chain:, wallet_name:, account_name:)
+    def initialize(address:, wallet_name:, account_name:)
       @address = address
-      @chain = chain
       @wallet_name = wallet_name
       @account_name = account_name.presence || nil
     end
@@ -16,22 +15,26 @@ module Wallets
 
     private
 
-    attr_reader :address, :chain, :wallet_name, :account_name
+    attr_reader :address, :wallet_name, :account_name
 
     def validate_params
-      raise ActionController::BadRequest, 'Missing request header' unless address.present? && chain.present?
+      raise ActionController::BadRequest, 'Missing request header' if address.blank?
       raise ActionController::BadRequest, 'Missing params' if wallet_name.blank?
     end
 
     def create_wallet
-      network_chain = Chain.where('name ILIKE ?', chain).first
+      create_attrs = {
+        wallet_name: wallet_name,
+        address: address
+      }
 
-      raise ActionController::BadRequest, 'Wallet chain can not be found' unless chain
+      create_attrs[:account_name] = account_name if account_name
 
-      wa = WalletAccount.find_or_create_by(wallet_name: wallet_name, address: address)
-      wa.update(account_name: account_name) if account_name
-      wa.chains << network_chain
-      wa.id
+      wa = WalletAccount.create!(create_attrs)
+
+      Chain.all.each do |chain|
+        wa.chains << chain
+      end
     end
   end
 end

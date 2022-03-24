@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_21_095948) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_24_120601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,6 +69,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_095948) do
     t.bigint "wallet_account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "eth_historical_prices", force: :cascade do |t|
+    t.string "utc_date"
+    t.string "unix_timestamp"
+    t.string "usd_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["utc_date"], name: "index_eth_historical_prices_on_utc_date", unique: true
+  end
+
+  create_table "nfts", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.bigint "wallet_account_id"
+    t.bigint "chain_id"
+    t.integer "status", default: 0
+    t.string "contract_address"
+    t.string "transaction_hash"
+    t.string "transaction_external_url"
+    t.string "mint_error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chain_id"], name: "index_nfts_on_chain_id"
+    t.index ["wallet_account_id"], name: "index_nfts_on_wallet_account_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -147,6 +172,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_21_095948) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "nfts", "chains"
+  add_foreign_key "nfts", "wallet_accounts"
   add_foreign_key "sessions", "users"
   add_foreign_key "tokens", "chains"
   add_foreign_key "tokens", "wallet_accounts"

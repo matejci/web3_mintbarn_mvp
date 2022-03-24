@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
 
       resources :wallets, only: :create
+      resources :metrics, only: :index
+      resources :nfts, only: :create
     end
 
     # scope module: 'v2', constraints: ApiConstraints.new(version: 2) do

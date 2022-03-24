@@ -22,7 +22,7 @@ class UpdateBalanceJob < ApplicationJob
 
     url = 'https://api-rinkeby.etherscan.io/api'
 
-    query_options = { module: 'account',
+    query_options = { 'module' => 'account',
                       action: 'balance',
                       address: wa.address,
                       tag: 'latest',

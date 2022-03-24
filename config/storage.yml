@@ -12,7 +12,15 @@ amazon:
   access_key_id: <%= ENV.fetch('AWS_ACCESS_KEY_ID') %>
   secret_access_key: <%= ENV.fetch('AWS_SECRET_ACCESS_KEY') %>
   region: us-west-1
-  bucket: mynftstats-<%= Rails.env %>
+  bucket: nfts-<%= Rails.env %>
+  public: true
+
+amazon_dev:
+  service: S3
+  access_key_id: <%= ENV.fetch('AWS_ACCESS_KEY_ID') %>
+  secret_access_key: <%= ENV.fetch('AWS_SECRET_ACCESS_KEY') %>
+  region: us-west-1
+  bucket: nfts-dev
   public: true
 
 # Remember not to checkin your GCS keyfile to a repository

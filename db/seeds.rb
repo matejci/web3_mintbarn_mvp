@@ -18,12 +18,13 @@ User.create(first_name: 'Matej', last_name: 'Cica', email: 'matej@takkoapp.com',
             dob: Date.new(1986, 4, 13), tos_accepted: true, tos_accepted_at: Time.current,
             tos_accepted_ip: 'localhost', admin: true, active: true)
 
-networks = [{ name: 'Mainnet', rpc_url: 'https://mainnet.infura.io/v3/', block_explorer_url: 'https://etherscan.io' },
-            { name: 'Ropsten', rpc_url: 'https://ropsten.infura.io/v3/', block_explorer_url: 'https://ropsten.etherscan.io' },
-            { name: 'Rinkeby', rpc_url: 'https://rinkeby.infura.io/v3/', block_explorer_url: 'https://rinkeby.etherscan.io' },
-            { name: 'Goerli', rpc_url: 'https://goerli.infura.io/v3/', block_explorer_url: 'https://goerli.etherscan.io' },
-            { name: 'Kovan', rpc_url: 'https://kovan.infura.io/v3/', block_explorer_url: 'https://kovan.etherscan.io' }]
+chains = [{ name: 'Mainnet', rpc_url: 'https://mainnet.infura.io/v3/', block_explorer_url: 'https://etherscan.io' },
+          # { name: 'Ropsten', rpc_url: 'https://ropsten.infura.io/v3/', block_explorer_url: 'https://ropsten.etherscan.io' },
+          { name: 'Rinkeby', rpc_url: 'https://rinkeby.infura.io/v3/', block_explorer_url: 'https://rinkeby.etherscan.io' },
+          # { name: 'Goerli', rpc_url: 'https://goerli.infura.io/v3/', block_explorer_url: 'https://goerli.etherscan.io' },
+          # { name: 'Kovan', rpc_url: 'https://kovan.infura.io/v3/', block_explorer_url: 'https://kovan.etherscan.io' },
+          { name: 'Polygon', rpc_url: '', block_explorer_url: '' }]
 
-networks.each do |net|
+chains.each do |net|
   Chain.find_or_create_by!(name: net[:name], rpc_url: net[:rpc_url], block_explorer_url: net[:block_explorer_url])
 end

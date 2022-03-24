@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   before_action :validate_app_token, unless: :known_agents
   # before_action :set_current_user, unless: :known_agents
   before_action :set_current_wallet_account, unless: :known_agents
+  before_action :set_current_chain, unless: :known_agents
 
   private
 
@@ -35,6 +36,14 @@ class ApplicationController < ActionController::Base
 
   def set_current_wallet_account
     @current_wallet = WalletAccount.find_by(address: request.headers['WALLET-ADDRESS'])
+
+    raise ActionController::BadRequest, 'Wallet address missing' unless @current_wallet
+  end
+
+  def set_current_chain
+    @current_chain = Chain.where('name ILIKE ?', request.headers['WALLET-CHAIN']).first
+
+    raise ActionController::BadRequest, 'Wrong chain specified' unless @current_chain
   end
 
   def user_logged_in?
