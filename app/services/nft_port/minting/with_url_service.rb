@@ -37,7 +37,7 @@ module NftPort
 
         if req.status != 200 || parsed_response['response'] == 'NOK'
           local_nft.status = :failed
-          local_nft.mint_error = parsed_response['error'] || 'Request to NftPort failed.'
+          local_nft.mint_error = parsed_response['error'] || parsed_response.dig('detail', 0, 'msg')
           local_nft.save!
           return { error: parsed_response['error'] }
         end
