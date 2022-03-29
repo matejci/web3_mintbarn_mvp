@@ -22,7 +22,7 @@ module NftPort
 
         req_body = {
           chain: Chains::MapperService.new(chain_name: chain_name).call,
-          contract_address: Contract.last.contract_address, # TODO, change this to Takko contract (create it on dev and prod envs)
+          contract_address: current_contract,
           metadata_uri: local_nft.metadata_uri,
           mint_to_address: owner_address
         }

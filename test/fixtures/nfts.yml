@@ -14,6 +14,8 @@
 #  mint_error               :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  metadata_uri             :string
+#  external_url             :string
 #
 
 # This model initially had no columns defined. If you add columns to the

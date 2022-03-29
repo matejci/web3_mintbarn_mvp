@@ -16,6 +16,8 @@
 #  mint_error               :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  metadata_uri             :string
+#  external_url             :string
 #
 class Nft < ApplicationRecord
   belongs_to :wallet_account
