@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# NOT IN USE YET
 module Etherscan
   module Accounts
     class BalanceService

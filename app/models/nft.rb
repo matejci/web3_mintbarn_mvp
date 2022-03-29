@@ -24,7 +24,7 @@ class Nft < ApplicationRecord
   # TODO, file validations!
   has_one_attached :file
 
-  enum status: { created: 0, minted: 1, failed: 2 }
+  enum status: { created: 0, metadata_uploaded: 1, minted: 2, failed: 3 }
 
   validates :name, :description, presence: true
 

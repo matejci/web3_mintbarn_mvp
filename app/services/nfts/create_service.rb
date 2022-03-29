@@ -12,7 +12,9 @@ module Nfts
 
     def call
       # TODO, check for token balance on specified chain before creation
-      mint_nft(create_local_nft)
+      local_nft = create_local_nft
+      nft_data = upload_metadata(local_nft)
+      mint_nft(nft_data)
     end
 
     private
@@ -20,13 +22,17 @@ module Nfts
     attr_reader :name, :description, :file, :chain, :wallet
 
     def create_local_nft
-      nft = wallet.nfts.create!(name: name, description: description, chain: chain)
+      nft = wallet.nfts.create!(name: name, description: description, chain: chain, external_url: 'mynftstats.io')
       nft.file.attach(file)
       nft
     end
 
+    def upload_metadata(nft)
+      NftPort::Storage::UploadMetadataService.new(local_nft: nft).call
+    end
+
     def mint_nft(nft)
-      NftPort::Minting::WithUrlService.new(local_nft: nft, wallet_address: wallet.address, chain_name: chain.name).call
+      NftPort::Minting::CustomizableMintingService.new(local_nft: nft, chain_name: chain.name, owner_address: wallet.address).call
     end
   end
 end

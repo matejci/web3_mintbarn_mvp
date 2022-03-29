@@ -4,6 +4,9 @@ module Minerstat
   class WalletAddressValidatorService
     def initialize(address:)
       @address = address
+    rescue StandardError => e
+      Bugsnag.notify("Minerstat::WalletAddressValidatorService ERROR - #{e.message}") { |report| report.severity = 'error' }
+      raise e
     end
 
     def call

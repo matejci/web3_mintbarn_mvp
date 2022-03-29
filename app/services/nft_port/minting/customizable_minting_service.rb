@@ -2,33 +2,29 @@
 
 module NftPort
   module Minting
-    class WithUrlService < BaseService
-      def initialize(local_nft:, wallet_address:, chain_name:)
+    class CustomizableMintingService < BaseService
+      def initialize(local_nft:, chain_name:, owner_address:)
         @local_nft = local_nft
-        @wallet_address = wallet_address
         @chain_name = chain_name
+        @owner_address = owner_address
       end
 
       def call
-        easy_mint
-      rescue StandardError => e
-        Bugsnag.notify("NftPort::Minting::WithUrlService ERROR - #{e.message}") { |report| report.severity = 'error' }
-        raise e
+        customizable_mint
       end
 
       private
 
-      attr_reader :local_nft, :wallet_address, :chain_name
+      attr_reader :local_nft, :chain_name, :owner_address
 
-      def easy_mint
-        url = 'https://api.nftport.xyz/v0/mints/easy/urls'
+      def customizable_mint
+        url = 'https://api.nftport.xyz/v0/mints/customizable'
 
         req_body = {
           chain: Chains::MapperService.new(chain_name: chain_name).call,
-          name: local_nft.name,
-          description: local_nft.description,
-          file_url: local_nft.file.url,
-          mint_to_address: wallet_address
+          contract_address: Contract.last.contract_address, # TODO, change this to Takko contract (create it on dev and prod envs)
+          metadata_uri: local_nft.metadata_uri,
+          mint_to_address: owner_address
         }
 
         req = Faraday.new.post(url, req_body.to_json, nft_port_headers)

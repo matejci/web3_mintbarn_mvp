@@ -1,0 +1,5 @@
+
+2022-03-29
+----------
+ - run migrations
+ - create new smart contract for staging

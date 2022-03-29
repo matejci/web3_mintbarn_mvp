@@ -123,10 +123,7 @@ Lint/DeprecatedClassMethods:
 
 Lint/MissingSuper:
   Exclude:
-    - 'app/services/verifications/*'
-    - 'app/services/leaderboard/**/*'
-    - 'app/services/feeds/*'
-    - 'app/services/search/*'
+    - 'app/services/nft_port/**/*'
 
 Metrics/AbcSize:
   Enabled: false
