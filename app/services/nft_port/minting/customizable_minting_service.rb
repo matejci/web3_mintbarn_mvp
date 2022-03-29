@@ -3,10 +3,11 @@
 module NftPort
   module Minting
     class CustomizableMintingService < BaseService
-      def initialize(local_nft:, chain_name:, owner_address:)
+      def initialize(local_nft:, chain:, owner_address:, contract:)
         @local_nft = local_nft
-        @chain_name = chain_name
+        @chain = chain
         @owner_address = owner_address
+        @contract = contract
       end
 
       def call
@@ -15,14 +16,14 @@ module NftPort
 
       private
 
-      attr_reader :local_nft, :chain_name, :owner_address
+      attr_reader :local_nft, :chain, :owner_address, :contract
 
       def customizable_mint
         url = 'https://api.nftport.xyz/v0/mints/customizable'
 
         req_body = {
-          chain: Chains::MapperService.new(chain_name: chain_name).call,
-          contract_address: current_contract,
+          chain: Chains::MapperService.new(chain_name: chain.name).call,
+          contract_address: contract.contract_address,
           metadata_uri: local_nft.metadata_uri,
           mint_to_address: owner_address
         }

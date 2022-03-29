@@ -12,14 +12,23 @@ module Nfts
 
     def call
       # TODO, check for token balance on specified chain before creation
+      contract = validate_contract
       local_nft = create_local_nft
       nft_data = upload_metadata(local_nft)
-      mint_nft(nft_data)
+      mint_nft(nft_data, contract)
     end
 
     private
 
     attr_reader :name, :description, :file, :chain, :wallet
+
+    def validate_contract
+      contract = Contract.completed.where(chain_id: chain.id).first
+
+      raise ActionController::BadRequest, 'Contract for given chain does not exist' unless contract
+
+      contract
+    end
 
     def create_local_nft
       nft = wallet.nfts.create!(name: name, description: description, chain: chain, external_url: 'mynftstats.io')
@@ -31,8 +40,8 @@ module Nfts
       NftPort::Storage::UploadMetadataService.new(local_nft: nft).call
     end
 
-    def mint_nft(nft)
-      NftPort::Minting::CustomizableMintingService.new(local_nft: nft, chain_name: chain.name, owner_address: wallet.address).call
+    def mint_nft(nft, contract)
+      NftPort::Minting::CustomizableMintingService.new(local_nft: nft, chain: chain, owner_address: wallet.address, contract: contract).call
     end
   end
 end
