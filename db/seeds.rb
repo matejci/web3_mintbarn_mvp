@@ -23,7 +23,7 @@ chains = [{ name: 'Mainnet', rpc_url: 'https://mainnet.infura.io/v3/', block_exp
           { name: 'Rinkeby', rpc_url: 'https://rinkeby.infura.io/v3/', block_explorer_url: 'https://rinkeby.etherscan.io' },
           # { name: 'Goerli', rpc_url: 'https://goerli.infura.io/v3/', block_explorer_url: 'https://goerli.etherscan.io' },
           # { name: 'Kovan', rpc_url: 'https://kovan.infura.io/v3/', block_explorer_url: 'https://kovan.etherscan.io' },
-          { name: 'Polygon', rpc_url: '', block_explorer_url: '' }]
+          { name: 'Polygon', rpc_url: 'https://polygon-rpc.com/', block_explorer_url: 'https://polygonscan.com/' }]
 
 chains.each do |net|
   Chain.find_or_create_by!(name: net[:name], rpc_url: net[:rpc_url], block_explorer_url: net[:block_explorer_url])
