@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_180547) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_30_151137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_180547) do
     t.string "block_explorer_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "etherscan_api_url"
     t.index ["name"], name: "index_chains_on_name", unique: true
   end
 

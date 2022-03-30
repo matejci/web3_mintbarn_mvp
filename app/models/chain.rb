@@ -10,6 +10,7 @@
 #  block_explorer_url :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  etherscan_api_url  :string
 #
 class Chain < ApplicationRecord
   has_and_belongs_to_many :wallet_accounts
