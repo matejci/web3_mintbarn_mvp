@@ -2,9 +2,10 @@
 
 module Nfts
   class CreateService
-    def initialize(name:, description:, file:, chain:, wallet:)
+    def initialize(name:, description:, signature:, file:, chain:, wallet:)
       @name = name
       @description = description
+      @signature = signature
       @file = file
       @chain = chain
       @wallet = wallet
@@ -20,7 +21,7 @@ module Nfts
 
     private
 
-    attr_reader :name, :description, :file, :chain, :wallet
+    attr_reader :name, :description, :signature, :file, :chain, :wallet
 
     def validate_contract
       contract = Contract.completed.where(chain_id: chain.id).first
@@ -31,7 +32,7 @@ module Nfts
     end
 
     def create_local_nft
-      nft = wallet.nfts.create!(name: name, description: description, chain: chain, external_url: 'mynftstats.io')
+      nft = wallet.nfts.create!(name: name, description: description, chain: chain, signature: signature, external_url: 'mynftstats.io')
       nft.file.attach(file)
       nft
     end

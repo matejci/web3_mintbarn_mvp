@@ -137,6 +137,9 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 50
 
+Metrics/ParameterLists:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
@@ -232,3 +235,4 @@ Rails/Output:
 
 Rails/I18nLocaleTexts:
   Enabled: false
+

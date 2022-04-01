@@ -6,6 +6,7 @@ module Api
       def create
         @collection = Nfts::CreateService.new(name: params[:name],
                                               description: params[:description],
+                                              signature: params[:signature],
                                               file: params[:file],
                                               chain: @current_chain,
                                               wallet: @current_wallet).call

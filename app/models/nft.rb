@@ -18,6 +18,7 @@
 #  updated_at               :datetime         not null
 #  metadata_uri             :string
 #  external_url             :string
+#  signature                :string
 #
 class Nft < ApplicationRecord
   belongs_to :wallet_account
@@ -28,7 +29,7 @@ class Nft < ApplicationRecord
 
   enum status: { created: 0, metadata_uploaded: 1, minted: 2, failed: 3 }
 
-  validates :name, :description, presence: true
+  validates :name, :description, :signature, presence: true
 
   validates :name, length: { minimum: 1, maximum: 400 }
   validates :description, length: { minimum: 1, maximum: 2000 }

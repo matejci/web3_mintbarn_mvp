@@ -16,6 +16,7 @@
 #  updated_at               :datetime         not null
 #  metadata_uri             :string
 #  external_url             :string
+#  signature                :string
 #
 require "test_helper"
 
