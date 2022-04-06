@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_01_154549) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_05_165341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,6 +112,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_01_154549) do
     t.string "metadata_uri"
     t.string "external_url"
     t.string "signature"
+    t.string "token_id"
+    t.string "mint_type"
     t.index ["chain_id"], name: "index_nfts_on_chain_id"
     t.index ["wallet_account_id"], name: "index_nfts_on_wallet_account_id"
   end

@@ -124,6 +124,7 @@ Lint/DeprecatedClassMethods:
 Lint/MissingSuper:
   Exclude:
     - 'app/services/nft_port/**/*'
+    - 'app/services/rarible/**/*'
 
 Metrics/AbcSize:
   Enabled: false

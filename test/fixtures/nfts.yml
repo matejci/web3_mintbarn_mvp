@@ -17,6 +17,8 @@
 #  metadata_uri             :string
 #  external_url             :string
 #  signature                :string
+#  token_id                 :string
+#  mint_type                :string
 #
 
 # This model initially had no columns defined. If you add columns to the

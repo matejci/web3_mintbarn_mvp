@@ -8,6 +8,7 @@ module Api
                                               description: params[:description],
                                               signature: params[:signature],
                                               file: params[:file],
+                                              mint_type: params[:mint_type],
                                               chain: @current_chain,
                                               wallet: @current_wallet).call
 

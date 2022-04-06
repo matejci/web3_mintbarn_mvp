@@ -19,18 +19,24 @@
 #  metadata_uri             :string
 #  external_url             :string
 #  signature                :string
+#  token_id                 :string
+#  mint_type                :string
 #
 class Nft < ApplicationRecord
+  MINT_TYPES = %w[lazy normal].freeze
+
   belongs_to :wallet_account
   belongs_to :chain
 
   # TODO, file validations!
   has_one_attached :file
 
-  enum status: { created: 0, metadata_uploaded: 1, minted: 2, failed: 3 }
+  enum status: { created: 0, metadata_uploaded: 1, minted: 2, failed: 3, waiting_on_signing: 4 }
 
-  validates :name, :description, :signature, presence: true
-
+  validates :name, :description, :mint_type, presence: true
+  validates :mint_type, inclusion: { in: MINT_TYPES }
   validates :name, length: { minimum: 1, maximum: 400 }
   validates :description, length: { minimum: 1, maximum: 2000 }
+
+  validates :signature, presence: true, if: -> { mint_type == 'normal' }
 end
