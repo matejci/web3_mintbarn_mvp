@@ -8,6 +8,7 @@ module ErrorHandling
     rescue_from ActionController::UnknownFormat, with: :bad_request
     rescue_from ActionController::BadRequest, with: :bad_request
     rescue_from ActiveRecord::RecordInvalid, with: :invalid_record
+    rescue_from ActiveRecord::RecordNotFound, with: :bad_request
   end
 
   private
