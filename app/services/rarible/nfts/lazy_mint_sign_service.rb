@@ -3,9 +3,11 @@
 module Rarible
   module Nfts
     class LazyMintSignService < BaseService
-      def initialize(nft_id:, signature:, chain_name:, owner_address:)
+      def initialize(nft_id:, signature:, creators:, royalties:, chain_name:, owner_address:)
         @nft_id = nft_id
         @signature = signature
+        @creators = creators
+        @royalties = royalties
         @chain_name = chain_name
         @owner_address = owner_address
       end
@@ -17,7 +19,7 @@ module Rarible
 
       private
 
-      attr_reader :nft_id, :signature, :chain_name, :owner_address
+      attr_reader :nft_id, :signature, :creators, :royalties, :chain_name, :owner_address
 
       def fetch_local_nft
         Nft.waiting_on_signing.find(nft_id)
@@ -29,8 +31,8 @@ module Rarible
         req_body = {
           contract: RARIBLE_CHAINS[chain_name][:contract_address],
           uri: nft.metadata_uri,
-          royalties: [{ account: owner_address, value: 1_000 }],
-          creators: [{ account: owner_address, value: 1_000 }],
+          royalties: parse_creators_royalties(royalties),
+          creators: parse_creators_royalties(creators),
           tokenId: nft.token_id,
           :@type => 'ERC721',
           signatures: [signature]
@@ -48,6 +50,12 @@ module Rarible
           nft.update!(status: :failed, mint_error: error)
 
           raise ActionController::BadRequest, "LazyMintSignService error: #{error}"
+        end
+      end
+
+      def parse_creators_royalties(collection)
+        collection.each_with_object([]) do |item, results|
+          results << { account: item['account'], value: item['value'] }
         end
       end
 

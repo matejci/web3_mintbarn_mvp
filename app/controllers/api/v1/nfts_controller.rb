@@ -18,6 +18,8 @@ module Api
       def lazy_mint_sign
         @collection = Rarible::Nfts::LazyMintSignService.new(nft_id: params[:nft_id],
                                                              signature: params[:signature],
+                                                             creators: params[:creators],
+                                                             royalties: params[:royalties],
                                                              chain_name: @current_chain.name.downcase.to_sym,
                                                              owner_address: @current_wallet.address).call
 
