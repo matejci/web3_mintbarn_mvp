@@ -12,7 +12,8 @@ module Api
                                               chain: @current_chain,
                                               wallet: @current_wallet).call
 
-        render json: @collection, status: :ok
+        # render json: @collection, status: :ok
+        render :create, status: :ok
       end
 
       def lazy_mint_sign

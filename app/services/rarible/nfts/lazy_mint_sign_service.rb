@@ -30,7 +30,7 @@ module Rarible
 
         req_body = {
           contract: RARIBLE_CHAINS[chain_name][:contract_address],
-          uri: nft.metadata_uri,
+          uri: nft.metadata_uri.gsub('ipfs://', '/ipfs/'),
           royalties: parse_creators_royalties(royalties),
           creators: parse_creators_royalties(creators),
           tokenId: nft.token_id,
@@ -54,6 +54,8 @@ module Rarible
       end
 
       def parse_creators_royalties(collection)
+        return [] unless collection
+
         collection.each_with_object([]) do |item, results|
           results << { account: item['account'], value: item['value'] }
         end
