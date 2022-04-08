@@ -31,6 +31,7 @@ module Rarible
         req_body = {
           contract: RARIBLE_CHAINS[chain_name][:contract_address],
           uri: nft.metadata_uri.gsub('ipfs://', '/ipfs/'),
+          tokenURI: nft.metadata_uri.gsub('ipfs://', '/ipfs/'),
           royalties: parse_creators_royalties(royalties),
           creators: parse_creators_royalties(creators),
           tokenId: nft.token_id,
