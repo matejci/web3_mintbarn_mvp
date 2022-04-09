@@ -23,7 +23,7 @@ class Contract < ApplicationRecord
 
   belongs_to :chain
 
-  enum status: { created: 0, minted: 1, completed: 2, failed: 3 }
+  enum status: { created: 0, minted: 1, completed: 2, failed: 3, inactive: 4 }
 
   validates :name, :contract_symbol, :contract_type, :owner_address, presence: true
   validates :contract_type, inclusion: { in: ALLOWED_CONTRACT_TYPES }
