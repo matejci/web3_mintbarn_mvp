@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_05_165341) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_24_120601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,10 +58,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_165341) do
   create_table "chains", force: :cascade do |t|
     t.string "name"
     t.string "rpc_url"
-    t.string "block_explorer_url"
+    t.string "explorer_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "etherscan_api_url"
     t.index ["name"], name: "index_chains_on_name", unique: true
   end
 
@@ -72,49 +71,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_165341) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contracts", force: :cascade do |t|
-    t.string "name"
-    t.string "contract_symbol"
-    t.string "contract_type"
-    t.bigint "chain_id"
-    t.string "owner_address"
-    t.boolean "metadata_updateable", default: false
-    t.string "transaction_hash"
-    t.string "transaction_external_url"
-    t.string "contract_address"
-    t.integer "status", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chain_id"], name: "index_contracts_on_chain_id"
-  end
-
-  create_table "eth_historical_prices", force: :cascade do |t|
-    t.string "utc_date"
-    t.string "unix_timestamp"
-    t.string "usd_value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["utc_date"], name: "index_eth_historical_prices_on_utc_date", unique: true
-  end
-
   create_table "nfts", force: :cascade do |t|
     t.string "name"
+    t.string "symbol"
     t.string "description"
+    t.json "metadata"
+    t.boolean "is_mutable"
+    t.boolean "is_master_edition", default: false
+    t.integer "seller_fee_basis_points", default: 0
+    t.string "creators", array: true
+    t.string "share", array: true
+    t.string "mint_to_public_key"
     t.bigint "wallet_account_id"
     t.bigint "chain_id"
+    t.string "metadata_url"
+    t.string "explorer_url"
+    t.string "mint"
+    t.string "mint_secret_recovery_phrase"
+    t.boolean "primary_sale_happened", default: false
+    t.string "transaction_signature"
+    t.string "update_authority"
     t.integer "status", default: 0
-    t.string "contract_address"
-    t.string "transaction_hash"
-    t.string "transaction_external_url"
-    t.string "mint_error"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "metadata_uri"
-    t.string "external_url"
-    t.string "signature"
-    t.string "token_id"
-    t.string "mint_type"
     t.index ["chain_id"], name: "index_nfts_on_chain_id"
+    t.index ["creators"], name: "index_nfts_on_creators", using: :gin
+    t.index ["share"], name: "index_nfts_on_share", using: :gin
     t.index ["wallet_account_id"], name: "index_nfts_on_wallet_account_id"
   end
 
@@ -194,7 +176,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_165341) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "contracts", "chains"
   add_foreign_key "nfts", "chains"
   add_foreign_key "nfts", "wallet_accounts"
   add_foreign_key "sessions", "users"

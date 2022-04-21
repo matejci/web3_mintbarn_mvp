@@ -14,9 +14,7 @@ Rails.application.routes.draw do
       end
 
       resources :wallets, only: :create
-      resources :nfts, only: :create do
-        post 'lazy-mint-sign', on: :collection
-      end
+      resources :nfts, only: :create
     end
 
     # scope module: 'v2', constraints: ApiConstraints.new(version: 2) do

@@ -2,8 +2,8 @@
 
 module CronJobs
   class << self
-    def import_eth_values!
-      Cron::ImportEthValueJob.perform_later
+    def do_something!
+      # puts 'something'
     end
   end
 end

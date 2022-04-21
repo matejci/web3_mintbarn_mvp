@@ -2,88 +2,73 @@
 
 module Nfts
   class CreateService
-    def initialize(name:, description:, signature:, file:, mint_type:, chain:, wallet:)
-      @name = name
-      @description = description
-      @signature = signature
-      @file = file
-      @mint_type = mint_type
+    def initialize(params:, chain:, wallet:)
+      @b58_private_key = params[:b58_private_key]
+      @name = params[:name]
+      @file = params[:file]
+      @symbol = params[:symbol].presence || ''
+      @description = params[:description]
+      @is_mutable = params[:is_mutable]
+      @seller_fee_basis_points = params[:seller_fee_basis_points]
+      @creators = params[:creators]
+      @share = params[:share]
+      @mint_to_public_key = params[:mint_to_public_key]
       @chain = chain
       @wallet = wallet
     end
 
     def call
-      # TODO, check for token balance on specified chain before creation
-
-      contract = validate_contract if mint_type == 'normal'
+      # TODO, check for available credits for wallet address before proceeding
+      validate_params
       local_nft = create_local_nft
-      upload_metadata(local_nft)
-      mint_nft(local_nft, contract)
+      mint_nft(local_nft)
+    rescue StandardError => e
+      error_msg = e.message
+      Bugsnag.notify("NFTS::CreateService ERROR - #{error_msg}") { |report| report.severity = 'error' }
+      raise ActionController::BadRequest, error_msg
     end
 
     private
 
-    attr_reader :name, :description, :signature, :file, :mint_type, :chain, :wallet
+    attr_reader :b58_private_key, :name, :file, :symbol, :description, :is_mutable, :seller_fee_basis_points, :creators, :share, :mint_to_public_key, :chain, :wallet
 
-    def validate_contract
-      contract = Contract.completed.where(chain_id: chain.id).first
-
-      raise ActionController::BadRequest, 'Contract for given chain does not exist' unless contract
-
-      contract
+    def validate_params
+      raise ActionController::BadRequest, 'Creators param must be array' unless creators.is_a?(Array) && creators.present?
+      raise ActionController::BadRequest, 'Share param must be array' unless share.is_a?(Array) && share.present?
+      raise ActionController::BadRequest, 'File param missing' if file.blank?
     end
 
     def create_local_nft
       nft = wallet.nfts.create!(name: name,
+                                symbol: symbol,
                                 description: description,
-                                chain: chain,
-                                signature: signature,
-                                mint_type: mint_type,
-                                external_url: 'mynftstats.io')
+                                is_mutable: is_mutable,
+                                seller_fee_basis_points: seller_fee_basis_points.to_i,
+                                creators: creators,
+                                share: share,
+                                mint_to_public_key: mint_to_public_key.presence || wallet.address,
+                                chain: chain)
       nft.file.attach(file)
       nft
     end
 
-    def upload_metadata(nft)
-      data = NftPort::Storage::UploadMetadataService.new(name: nft.name, description: nft.description, file_url: nft.file.url, external_url: nft.external_url).call
+    def mint_nft(nft)
+      metadata_url = Solana::NftMetadataService.new(local_nft: nft).call
+      mint_response = Solana::MintNftService.new(private_key: b58_private_key, local_nft: nft, metadata_url: metadata_url, chain: chain).call
 
-      handle_service_errors(nft, data[:error], 'UploadMetadataService') if data[:error]
-      nft.update!(status: :metadata_uploaded, metadata_uri: data[:data]['metadata_uri'])
+      nft_attrs = {
+        metadata_url: metadata_url,
+        explorer_url: mint_response['explorer_url'],
+        mint: mint_response['mint'],
+        mint_secret_recovery_phrase: mint_response['mint_secret_recovery_phrase'],
+        primary_sale_happened: mint_response['primary_sale_happened'],
+        transaction_signature: mint_response['transaction_signature'],
+        update_authority: mint_response['update_authority'],
+        status: :minted
+      }
+
+      nft.update!(nft_attrs)
       nft
-    end
-
-    def mint_nft(nft, contract)
-      if mint_type == 'lazy'
-        data = Rarible::Nfts::PrepareLazyMintDataService.new(owner_address: wallet.address, chain_name: chain.name.downcase.to_sym).call
-
-        handle_service_errors(nft, data[:error], 'PrepareLazyMintDataService') if data[:error]
-
-        nft.update!(status: :waiting_on_signing, token_id: data[:data]['tokenId'])
-
-        { nft: nft, contract_address: data[:contract_address] }
-      else
-        data = NftPort::Minting::CustomizableMintingService.new(metadata_uri: nft.metadata_uri,
-                                                                chain_name: chain.name,
-                                                                owner_address: wallet.address,
-                                                                contract_address: contract.contract_address).call
-
-        handle_service_errors(nft, data[:error], 'CustomizableMintingService') if data[:error]
-
-        service_data = data[:data]
-
-        nft.update!(status: :minted,
-                    contract_address: service_data['contract_address'],
-                    transaction_hash: service_data['transaction_hash'],
-                    transaction_external_url: service_data['transaction_external_url'])
-
-        { nft: nft }
-      end
-    end
-
-    def handle_service_errors(nft, error, service)
-      nft.update!(status: :failed, mint_error: error)
-
-      raise ActionController::BadRequest, "#{service} error: #{error}"
     end
   end
 end

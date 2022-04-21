@@ -10,7 +10,9 @@ module Wallets
 
     def call
       validate_params
-      create_wallet
+      wallet = create_wallet
+      assign_chains(wallet)
+      # TODO, assign subscription plan/credits etc
     end
 
     private
@@ -30,11 +32,11 @@ module Wallets
 
       create_attrs[:account_name] = account_name if account_name
 
-      wa = WalletAccount.create!(create_attrs)
+      WalletAccount.create!(create_attrs)
+    end
 
-      Chain.all.each do |chain|
-        wa.chains << chain
-      end
+    def assign_chains(wallet)
+      Chain.all.each { |chain| wallet.chains << chain }
     end
   end
 end

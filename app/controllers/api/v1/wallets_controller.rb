@@ -17,7 +17,7 @@ module Api
       private
 
       def check_wallet_address
-        raise ActionController::BadRequest, 'Invalid wallet address' unless Minerstat::WalletAddressValidatorService.new(address: request.headers['WALLET-ADDRESS']).call
+        raise ActionController::BadRequest, 'Invalid wallet address' unless Solana::WalletAddressValidatorService.new(address: request.headers['WALLET-ADDRESS']).call
       end
     end
   end

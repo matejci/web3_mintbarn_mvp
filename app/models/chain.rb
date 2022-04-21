@@ -4,13 +4,12 @@
 #
 # Table name: chains
 #
-#  id                 :bigint           not null, primary key
-#  name               :string
-#  rpc_url            :string
-#  block_explorer_url :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  etherscan_api_url  :string
+#  id           :bigint           not null, primary key
+#  name         :string
+#  rpc_url      :string
+#  explorer_url :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 class Chain < ApplicationRecord
   has_and_belongs_to_many :wallet_accounts

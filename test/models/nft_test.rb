@@ -2,23 +2,29 @@
 #
 # Table name: nfts
 #
-#  id                       :bigint           not null, primary key
-#  name                     :string
-#  description              :string
-#  wallet_account_id        :bigint
-#  chain_id                 :bigint
-#  status                   :integer          default("created")
-#  contract_address         :string
-#  transaction_hash         :string
-#  transaction_external_url :string
-#  mint_error               :string
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  metadata_uri             :string
-#  external_url             :string
-#  signature                :string
-#  token_id                 :string
-#  mint_type                :string
+#  id                          :bigint           not null, primary key
+#  name                        :string
+#  symbol                      :string
+#  description                 :string
+#  metadata                    :json
+#  is_mutable                  :boolean
+#  is_master_edition           :boolean          default(FALSE)
+#  seller_fee_basis_points     :integer          default(0)
+#  creators                    :string           is an Array
+#  share                       :string           is an Array
+#  mint_to_public_key          :string
+#  wallet_account_id           :bigint
+#  chain_id                    :bigint
+#  metadata_url                :string
+#  explorer_url                :string
+#  mint                        :string
+#  mint_secret_recovery_phrase :string
+#  primary_sale_happened       :boolean          default(FALSE)
+#  transaction_signature       :string
+#  update_authority            :string
+#  status                      :integer          default("created")
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
 #
 require "test_helper"
 
