@@ -2,8 +2,8 @@
 
 module CronJobs
   class << self
-    def do_something!
-      # puts 'something'
+    def import_solana_tokens!
+      Cron::ImportSolanaTokensJob.perform_later
     end
   end
 end

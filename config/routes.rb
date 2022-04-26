@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
       resources :wallets, only: :create
       resources :nfts, only: :create
+
+      resources :solana_tokens, only: :index
     end
 
     # scope module: 'v2', constraints: ApiConstraints.new(version: 2) do

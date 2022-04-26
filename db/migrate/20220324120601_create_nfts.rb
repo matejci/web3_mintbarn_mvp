@@ -1,6 +1,7 @@
 class CreateNfts < ActiveRecord::Migration[7.0]
   def change
     create_table :nfts do |t|
+      t.string :signature
       t.string :name
       t.string :symbol
       t.string :description

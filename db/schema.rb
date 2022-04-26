@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_24_120601) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_26_130632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_120601) do
   end
 
   create_table "nfts", force: :cascade do |t|
+    t.string "signature"
     t.string "name"
     t.string "symbol"
     t.string "description"
@@ -124,6 +125,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_24_120601) do
     t.datetime "updated_at", null: false
     t.index ["app_id"], name: "index_sessions_on_app_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "solana_tokens", force: :cascade do |t|
+    t.string "name"
+    t.string "symbol"
+    t.string "mint_address"
+    t.integer "decimals"
+    t.string "icon_url"
+    t.string "website"
+    t.integer "market_cap_rank"
+    t.decimal "price_ust"
+    t.json "market_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tokens", force: :cascade do |t|

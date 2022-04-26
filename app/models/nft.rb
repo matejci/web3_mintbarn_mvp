@@ -5,6 +5,7 @@
 # Table name: nfts
 #
 #  id                          :bigint           not null, primary key
+#  signature                   :string
 #  name                        :string
 #  symbol                      :string
 #  description                 :string

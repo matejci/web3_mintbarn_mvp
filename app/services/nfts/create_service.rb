@@ -2,8 +2,10 @@
 
 module Nfts
   class CreateService
+    ALLOWED_FILE_TYPES = %w[image/png image/jpeg].freeze
+
     def initialize(params:, chain:, wallet:)
-      @b58_private_key = params[:b58_private_key]
+      @signature = params[:signature]
       @name = params[:name]
       @file = params[:file]
       @symbol = params[:symbol].presence || ''
@@ -30,22 +32,26 @@ module Nfts
 
     private
 
-    attr_reader :b58_private_key, :name, :file, :symbol, :description, :is_mutable, :seller_fee_basis_points, :creators, :share, :mint_to_public_key, :chain, :wallet
+    attr_reader :signature, :name, :file, :symbol, :description, :is_mutable, :seller_fee_basis_points, :creators, :share, :mint_to_public_key, :chain, :wallet
 
     def validate_params
       raise ActionController::BadRequest, 'Creators param must be array' unless creators.is_a?(Array) && creators.present?
       raise ActionController::BadRequest, 'Share param must be array' unless share.is_a?(Array) && share.present?
       raise ActionController::BadRequest, 'File param missing' if file.blank?
+      raise ActionController::BadRequest, 'File extension not allowed' unless file.content_type.in?(ALLOWED_FILE_TYPES)
+
+      # TODO, validate Share and Creators
     end
 
     def create_local_nft
-      nft = wallet.nfts.create!(name: name,
+      nft = wallet.nfts.create!(signature: signature,
+                                name: name,
                                 symbol: symbol,
                                 description: description,
                                 is_mutable: is_mutable,
                                 seller_fee_basis_points: seller_fee_basis_points.to_i,
-                                creators: creators,
-                                share: share,
+                                creators: creators << ENV['COMPANY_PUBLIC_KEY'],
+                                share: share << 0,
                                 mint_to_public_key: mint_to_public_key.presence || wallet.address,
                                 chain: chain)
       nft.file.attach(file)
@@ -54,7 +60,7 @@ module Nfts
 
     def mint_nft(nft)
       metadata_url = Solana::NftMetadataService.new(local_nft: nft).call
-      mint_response = Solana::MintNftService.new(private_key: b58_private_key, local_nft: nft, metadata_url: metadata_url, chain: chain).call
+      mint_response = Solana::MintNftService.new(local_nft: nft, metadata_url: metadata_url, chain: chain).call
 
       nft_attrs = {
         metadata_url: metadata_url,

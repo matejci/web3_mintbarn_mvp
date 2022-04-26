@@ -2,8 +2,7 @@
 
 module Solana
   class MintNftService
-    def initialize(private_key:, local_nft:, metadata_url:, chain:)
-      @private_key = private_key # 4eDb5QnxF8B8oncxxkof8tAdL4i4QWuKnL9skAD7CDcydN4Dnw4Shgis4Wbz16tvFxLeBbJugR8V9HFGp3xjPvyx
+    def initialize(local_nft:, metadata_url:, chain:)
       @local_nft = local_nft
       @metadata_url = metadata_url
       @chain = chain
@@ -20,14 +19,14 @@ module Solana
 
     private
 
-    attr_reader :private_key, :local_nft, :metadata_url, :chain
+    attr_reader :local_nft, :metadata_url, :chain
 
     def mint_nft
       url = 'https://api.blockchainapi.com/v1/solana/nft'
 
       payload = {
         wallet: {
-          b58_private_key: private_key
+          b58_private_key: ENV['B58_COMPANY_PRIVATE_KEY']
         },
         nft_name: local_nft.name,
         nft_symbol: local_nft.symbol,
@@ -48,7 +47,7 @@ module Solana
 
       return parsed_response if req.success?
 
-      raise ActionController::BadRequest, req.error
+      raise ActionController::BadRequest, parsed_response['error_message']
     end
   end
 end
