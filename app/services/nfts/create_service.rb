@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 module Nfts
   class CreateService
     ALLOWED_FILE_TYPES = %w[image/png image/jpeg].freeze
@@ -39,8 +40,17 @@ module Nfts
       raise ActionController::BadRequest, 'Share param must be array' unless share.is_a?(Array) && share.present?
       raise ActionController::BadRequest, 'File param missing' if file.blank?
       raise ActionController::BadRequest, 'File extension not allowed' unless file.content_type.in?(ALLOWED_FILE_TYPES)
+      raise ActionController::BadRequest, 'Length of the creator list must match length of the list of share' unless creators.size == share.size
+      raise ActionController::BadRequest, 'Length of the lists must be between 1 and 5' unless share.empty? || share.size > 5
 
-      # TODO, validate Share and Creators
+      validate_share
+    end
+
+    def validate_share
+      error = share.find { |item| item.to_i.negative? || item.to_i > 100 }
+
+      raise ActionController::BadRequest, 'Share values must be between 0 and 100' if error
+      raise ActionController::BadRequest, 'Sum of share values must equal 100' if share.map!(&:to_i).sum != 100
     end
 
     def create_local_nft
@@ -78,3 +88,4 @@ module Nfts
     end
   end
 end
+# rubocop: enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity

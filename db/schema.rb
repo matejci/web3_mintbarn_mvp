@@ -135,7 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_26_130632) do
     t.string "icon_url"
     t.string "website"
     t.integer "market_cap_rank"
-    t.decimal "price_ust"
+    t.decimal "price_usd"
     t.json "market_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

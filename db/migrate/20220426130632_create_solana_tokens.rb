@@ -8,7 +8,7 @@ class CreateSolanaTokens < ActiveRecord::Migration[7.0]
       t.string :icon_url
       t.string :website
       t.integer :market_cap_rank
-      t.decimal :price_ust
+      t.decimal :price_usd
       t.json :market_data
 
       t.timestamps

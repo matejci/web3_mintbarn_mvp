@@ -31,7 +31,7 @@ module Cron
                       icon_url: item['icon'],
                       website: item['website'],
                       market_cap_rank: item['marketCapRank'],
-                      price_ust: item['priceUst'],
+                      price_usd: item['priceUst'],
                       market_data: item.dig('coingeckoInfo', 'marketData'))
       end
     end
