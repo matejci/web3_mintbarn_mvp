@@ -78,14 +78,15 @@ module Solana
             }
           ],
           category: 'image',
-          creators: [
-            {
-              address: nft.creators[0],
-              share: nft.share[0]
-            }
-          ]
+          creators: prepare_creators_data
         }
       }
+    end
+
+    def prepare_creators_data
+      nft.creators.each_with_object([]).with_index do |(el, arr), ind|
+        arr << { address: el, share: nft.share[ind] }
+      end
     end
   end
 end

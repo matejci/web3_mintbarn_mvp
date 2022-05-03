@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       end
 
       resources :wallets, only: :create
-      resources :nfts, only: :create
+      resources :nfts, only: [:create, :show, :index]
 
       resources :solana_tokens, only: :index
     end

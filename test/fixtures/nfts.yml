@@ -3,7 +3,6 @@
 # Table name: nfts
 #
 #  id                          :bigint           not null, primary key
-#  signature                   :string
 #  name                        :string
 #  symbol                      :string
 #  description                 :string
@@ -18,7 +17,7 @@
 #  chain_id                    :bigint
 #  metadata_url                :string
 #  explorer_url                :string
-#  mint                        :string
+#  mint_address                :string
 #  mint_secret_recovery_phrase :string
 #  primary_sale_happened       :boolean          default(FALSE)
 #  transaction_signature       :string
@@ -26,6 +25,9 @@
 #  status                      :integer          default("created")
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
+#  price_in_lamports           :bigint
+#  list_tx_signature           :string
+#  transfer_tx_signature       :string
 #
 
 # This model initially had no columns defined. If you add columns to the

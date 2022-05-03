@@ -8,6 +8,14 @@ module Api
 
         render :create, status: :created
       end
+
+      def index
+        @collection = Nfts::IndexService.new(page: params[:page], per_page: params[:per_page]).call
+      end
+
+      def show
+        @nft = Nft.find(params[:id])
+      end
     end
   end
 end

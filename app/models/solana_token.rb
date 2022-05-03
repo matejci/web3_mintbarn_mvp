@@ -12,7 +12,7 @@
 #  icon_url        :string
 #  website         :string
 #  market_cap_rank :integer
-#  price_ust       :decimal(, )
+#  price_usd       :decimal(, )
 #  market_data     :json
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

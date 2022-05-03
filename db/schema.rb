@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_26_130632) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_03_172515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,7 +72,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_26_130632) do
   end
 
   create_table "nfts", force: :cascade do |t|
-    t.string "signature"
     t.string "name"
     t.string "symbol"
     t.string "description"
@@ -87,7 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_26_130632) do
     t.bigint "chain_id"
     t.string "metadata_url"
     t.string "explorer_url"
-    t.string "mint"
+    t.string "mint_address"
     t.string "mint_secret_recovery_phrase"
     t.boolean "primary_sale_happened", default: false
     t.string "transaction_signature"
@@ -95,6 +94,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_26_130632) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "price_in_lamports"
+    t.string "list_tx_signature"
+    t.string "transfer_tx_signature"
     t.index ["chain_id"], name: "index_nfts_on_chain_id"
     t.index ["creators"], name: "index_nfts_on_creators", using: :gin
     t.index ["share"], name: "index_nfts_on_share", using: :gin

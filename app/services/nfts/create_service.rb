@@ -6,9 +6,9 @@ module Nfts
     ALLOWED_FILE_TYPES = %w[image/png image/jpeg].freeze
 
     def initialize(params:, chain:, wallet:)
-      @signature = params[:signature]
       @name = params[:name]
       @file = params[:file]
+      @price = params[:price]
       @symbol = params[:symbol].presence || ''
       @description = params[:description]
       @is_mutable = params[:is_mutable]
@@ -21,10 +21,12 @@ module Nfts
     end
 
     def call
-      # TODO, check for available credits for wallet address before proceeding
+      # TODO, check for available credits for company wallet address before proceeding
       validate_params
       local_nft = create_local_nft
       mint_nft(local_nft)
+      # list_nft(local_nft)
+      transfer_nft(local_nft)
     rescue StandardError => e
       error_msg = e.message
       Bugsnag.notify("NFTS::CreateService ERROR - #{error_msg}") { |report| report.severity = 'error' }
@@ -33,7 +35,7 @@ module Nfts
 
     private
 
-    attr_reader :signature, :name, :file, :symbol, :description, :is_mutable, :seller_fee_basis_points, :creators, :share, :mint_to_public_key, :chain, :wallet
+    attr_reader :name, :file, :price, :symbol, :description, :is_mutable, :seller_fee_basis_points, :creators, :share, :mint_to_public_key, :chain, :wallet
 
     def validate_params
       raise ActionController::BadRequest, 'Creators param must be array' unless creators.is_a?(Array) && creators.present?
@@ -41,7 +43,7 @@ module Nfts
       raise ActionController::BadRequest, 'File param missing' if file.blank?
       raise ActionController::BadRequest, 'File extension not allowed' unless file.content_type.in?(ALLOWED_FILE_TYPES)
       raise ActionController::BadRequest, 'Length of the creator list must match length of the list of share' unless creators.size == share.size
-      raise ActionController::BadRequest, 'Length of the lists must be between 1 and 5' unless share.empty? || share.size > 5
+      raise ActionController::BadRequest, 'Length of the lists must be between 1 and 5' if share.empty? || share.size > 4
 
       validate_share
     end
@@ -54,8 +56,8 @@ module Nfts
     end
 
     def create_local_nft
-      nft = wallet.nfts.create!(signature: signature,
-                                name: name,
+      nft = wallet.nfts.create!(name: name,
+                                price_in_lamports: price,
                                 symbol: symbol,
                                 description: description,
                                 is_mutable: is_mutable,
@@ -75,7 +77,7 @@ module Nfts
       nft_attrs = {
         metadata_url: metadata_url,
         explorer_url: mint_response['explorer_url'],
-        mint: mint_response['mint'],
+        mint_address: mint_response['mint'],
         mint_secret_recovery_phrase: mint_response['mint_secret_recovery_phrase'],
         primary_sale_happened: mint_response['primary_sale_happened'],
         transaction_signature: mint_response['transaction_signature'],
@@ -84,6 +86,19 @@ module Nfts
       }
 
       nft.update!(nft_attrs)
+      nft
+    end
+
+    def list_nft(nft)
+      list_response = Solana::ListNftService.new(chain_name: chain.name.downcase, mint_address: nft.mint_address, price: price).call
+      nft.update!(list_tx_signature: list_response['transaction_signature'], status: :listed)
+      nft
+    end
+
+    def transfer_nft(nft)
+      transfer_response = Solana::TransferNftService.new(recipient: nft.mint_to_public_key, token_address: nft.mint_address, chain_name: chain.name.downcase).call
+
+      nft.update!(status: :transfered, transfer_tx_signature: transfer_response['transaction_signature'])
       nft
     end
   end

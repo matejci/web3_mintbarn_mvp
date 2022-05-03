@@ -20,7 +20,7 @@ User.create(first_name: 'Matej', last_name: 'Cica', email: 'matej@takkoapp.com',
 
 chains = [{ name: 'Devnet', rpc_url: 'https://api.devnet.solana.com' },
           { name: 'Testnet', rpc_url: 'https://api.testnet.solana.com' },
-          { name: 'Mainnet', rpc_url: 'https://api.mainnet-beta.solana.com' }]
+          { name: 'Mainnet-beta', rpc_url: 'https://api.mainnet-beta.solana.com' }]
 
 chains.each do |net|
   Chain.find_or_create_by(name: net[:name], rpc_url: net[:rpc_url])

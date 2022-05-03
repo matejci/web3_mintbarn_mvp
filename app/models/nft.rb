@@ -5,7 +5,6 @@
 # Table name: nfts
 #
 #  id                          :bigint           not null, primary key
-#  signature                   :string
 #  name                        :string
 #  symbol                      :string
 #  description                 :string
@@ -20,7 +19,7 @@
 #  chain_id                    :bigint
 #  metadata_url                :string
 #  explorer_url                :string
-#  mint                        :string
+#  mint_address                :string
 #  mint_secret_recovery_phrase :string
 #  primary_sale_happened       :boolean          default(FALSE)
 #  transaction_signature       :string
@@ -28,6 +27,9 @@
 #  status                      :integer          default("created")
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
+#  price_in_lamports           :bigint
+#  list_tx_signature           :string
+#  transfer_tx_signature       :string
 #
 class Nft < ApplicationRecord
   belongs_to :wallet_account
@@ -36,11 +38,12 @@ class Nft < ApplicationRecord
   # TODO, file validations!
   has_one_attached :file
 
-  enum status: { created: 0, metadata_uploaded: 1, minted: 2, failed: 3 }
+  enum status: { created: 0, metadata_uploaded: 1, minted: 2, listed: 3, transfered: 4, failed: 5 }
 
   validates :name, presence: true, length: { maximum: 32 }
   validates :symbol, length: { maximum: 10 }
   validates :description, length: { maximum: 2000 }
   validates :seller_fee_basis_points, numericality: { in: 0..10_000 }
   validates :creators, :share, presence: true
+  validates :price_in_lamports, presence: true, numericality: { in: 1_000..18_446_744_073_709_551_615 }
 end
