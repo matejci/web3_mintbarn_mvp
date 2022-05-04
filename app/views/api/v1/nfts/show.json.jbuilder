@@ -13,6 +13,7 @@ json.data do
                 :status,
                 :creators,
                 :share,
-                :created_at)
+                :created_at,
+                :file_thumb_url)
   json.file_url @nft.file.url
 end

@@ -67,6 +67,7 @@ module Nfts
                                 mint_to_public_key: mint_to_public_key.presence || wallet.address,
                                 chain: chain)
       nft.file.attach(file)
+      nft.update!(file_thumb_url: nft.file.variant(resize_to_limit: [250, 250]).processed.url)
       nft
     end
 

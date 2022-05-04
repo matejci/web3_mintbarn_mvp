@@ -28,6 +28,7 @@
 #  price_in_lamports           :bigint
 #  list_tx_signature           :string
 #  transfer_tx_signature       :string
+#  file_thumb_url              :string
 #
 require "test_helper"
 
