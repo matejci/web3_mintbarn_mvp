@@ -57,18 +57,18 @@ module Solana
         animation_url: '',
         external_url: "www.mynftstats.io/nfts/#{nft.id}",
         attributes: [
-          {
-            trait_type: 'web',
-            value: 'yes'
-          },
-          {
-            trait_type: 'mobile',
-            value: 'yes'
-          }
+          # {
+          #   trait_type: 'web',
+          #   value: 'yes'
+          # },
+          # {
+          #   trait_type: 'mobile',
+          #   value: 'yes'
+          # }
         ],
         collection: {
-          name: 'testing',
-          family: 'tests'
+          name: ENV['HEROKU_ENV'],
+          family: 'mynftstats.io'
         },
         properties: {
           files: [

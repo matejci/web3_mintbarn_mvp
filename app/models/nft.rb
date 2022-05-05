@@ -46,5 +46,5 @@ class Nft < ApplicationRecord
   validates :description, length: { maximum: 2000 }
   validates :seller_fee_basis_points, numericality: { in: 0..10_000 }
   validates :creators, :share, presence: true
-  validates :price_in_lamports, presence: true, numericality: { in: 1_000..18_446_744_073_709_551_615 }
+  validates :price_in_lamports, numericality: { in: 1_000..18_446_744_073_709_551_615, allow_blank: true }
 end

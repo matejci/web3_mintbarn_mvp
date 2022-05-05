@@ -25,7 +25,6 @@ module Nfts
       validate_params
       local_nft = create_local_nft
       mint_nft(local_nft)
-      # list_nft(local_nft)
       transfer_nft(local_nft)
     rescue StandardError => e
       error_msg = e.message
@@ -57,7 +56,6 @@ module Nfts
 
     def create_local_nft
       nft = wallet.nfts.create!(name: name,
-                                price_in_lamports: price,
                                 symbol: symbol,
                                 description: description,
                                 is_mutable: is_mutable,
@@ -87,12 +85,6 @@ module Nfts
       }
 
       nft.update!(nft_attrs)
-      nft
-    end
-
-    def list_nft(nft)
-      list_response = Solana::ListNftService.new(chain_name: chain.name.downcase, mint_address: nft.mint_address, price: price).call
-      nft.update!(list_tx_signature: list_response['transaction_signature'], status: :listed)
       nft
     end
 

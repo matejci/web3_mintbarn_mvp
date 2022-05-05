@@ -38,7 +38,6 @@ module Solana
         seller_fee_basis_points: local_nft.seller_fee_basis_points,
         creators: local_nft.creators,
         share: local_nft.share.map(&:to_i),
-        # mint_to_public_key: local_nft.mint_to_public_key,
         mint_to_public_key: ENV['COMPANY_PUBLIC_KEY'],
         network: chain.name.downcase
       }
