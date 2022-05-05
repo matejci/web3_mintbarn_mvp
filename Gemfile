@@ -32,6 +32,7 @@ gem 'pg', '~> 1.1'
 gem 'redis', '~> 4.0'
 gem 'sidekiq'
 gem 'solana_rpc_ruby'
+gem 'newrelic_rpm'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
