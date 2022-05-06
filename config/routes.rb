@@ -23,4 +23,8 @@ Rails.application.routes.draw do
     #   resources :sessions
     # end
   end
+
+  # apple universal links
+  get '/apple-app-site-association', to: 'home#aasa'
+  get '/.well-known/apple-app-site-association', to: 'home#aasa'
 end
