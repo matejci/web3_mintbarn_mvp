@@ -3,10 +3,10 @@
 # Cost: 5 Credits
 module Solana
   class MintNftService
-    def initialize(local_nft:, metadata_url:, chain:)
+    def initialize(local_nft:, metadata_url:, chain_name:)
       @local_nft = local_nft
       @metadata_url = metadata_url
-      @chain = chain
+      @chain_name = chain_name
     end
 
     def call
@@ -20,7 +20,7 @@ module Solana
 
     private
 
-    attr_reader :local_nft, :metadata_url, :chain
+    attr_reader :local_nft, :metadata_url, :chain_name
 
     def mint_nft
       url = 'https://api.blockchainapi.com/v1/solana/nft'
@@ -39,7 +39,7 @@ module Solana
         creators: local_nft.creators,
         share: local_nft.share.map(&:to_i),
         mint_to_public_key: ENV['COMPANY_PUBLIC_KEY'],
-        network: chain.name.downcase
+        network: chain_name
       }
 
       req = Faraday.new.post(url, payload.to_json, { 'content-type': 'application/json', APIKeyID: ENV['BLOCKCHAIN_API_KEY_ID'], APISecretKey: ENV['BLOCKCHAIN_SECRET_KEY'] })

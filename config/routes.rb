@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     # end
   end
 
+  resources :nfts, only: :show
+
   # apple universal links
   get '/apple-app-site-association', to: 'home#aasa'
   get '/.well-known/apple-app-site-association', to: 'home#aasa'

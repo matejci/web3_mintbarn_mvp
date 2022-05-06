@@ -8,4 +8,6 @@ json.data do
                 :symbol,
                 :explorer_url,
                 :status)
+
+  json.mynftstats_url nft_url(@nft)
 end

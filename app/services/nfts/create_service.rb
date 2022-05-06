@@ -8,7 +8,6 @@ module Nfts
     def initialize(params:, chain:, wallet:)
       @name = params[:name]
       @file = params[:file]
-      @price = params[:price]
       @symbol = params[:symbol].presence || ''
       @description = params[:description]
       @is_mutable = params[:is_mutable]
@@ -24,8 +23,8 @@ module Nfts
       # TODO, check for available credits for company wallet address before proceeding
       validate_params
       local_nft = create_local_nft
-      mint_nft(local_nft)
-      transfer_nft(local_nft)
+      mint_and_transfer(local_nft.id)
+      local_nft
     rescue StandardError => e
       error_msg = e.message
       Bugsnag.notify("NFTS::CreateService ERROR - #{error_msg}") { |report| report.severity = 'error' }
@@ -65,34 +64,11 @@ module Nfts
                                 mint_to_public_key: mint_to_public_key.presence || wallet.address,
                                 chain: chain)
       nft.file.attach(file)
-      nft.update!(file_thumb_url: nft.file.variant(resize_to_limit: [250, 250]).processed.url)
       nft
     end
 
-    def mint_nft(nft)
-      metadata_url = Solana::NftMetadataService.new(local_nft: nft).call
-      mint_response = Solana::MintNftService.new(local_nft: nft, metadata_url: metadata_url, chain: chain).call
-
-      nft_attrs = {
-        metadata_url: metadata_url,
-        explorer_url: mint_response['explorer_url'],
-        mint_address: mint_response['mint'],
-        mint_secret_recovery_phrase: mint_response['mint_secret_recovery_phrase'],
-        primary_sale_happened: mint_response['primary_sale_happened'],
-        transaction_signature: mint_response['transaction_signature'],
-        update_authority: mint_response['update_authority'],
-        status: :minted
-      }
-
-      nft.update!(nft_attrs)
-      nft
-    end
-
-    def transfer_nft(nft)
-      transfer_response = Solana::TransferNftService.new(recipient: nft.mint_to_public_key, token_address: nft.mint_address, chain_name: chain.name.downcase).call
-
-      nft.update!(status: :transfered, transfer_tx_signature: transfer_response['transaction_signature'])
-      nft
+    def mint_and_transfer(nft_id)
+      NftMintAndTransferJob.perform_later(nft_id: nft_id, chain_name: chain.name.downcase)
     end
   end
 end
