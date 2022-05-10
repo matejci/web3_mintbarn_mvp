@@ -16,6 +16,8 @@ module Cron
       private
 
       def process_import_nfts_jobs
+        return unless (Time.current.hour % 12).zero?
+
         WalletAccount.find_each do |wallet|
           Cron::Nfts::ImportWalletNftsJob.perform_later(wallet.address)
         end
