@@ -39,7 +39,7 @@ class Nft < ApplicationRecord
   # TODO, file validations!
   has_one_attached :file
 
-  enum status: { created: 0, metadata_uploaded: 1, minted: 2, listed: 3, transfered: 4, failed: 5 }
+  enum status: { created: 0, metadata_uploaded: 1, minted: 2, listed: 3, transfered: 4, failed: 5, imported: 6 }
 
   validates :name, presence: true, length: { maximum: 32 }
   validates :symbol, length: { maximum: 10 }

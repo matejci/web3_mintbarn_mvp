@@ -18,6 +18,6 @@ json.data do
                   :status,
                   :created_at,
                   :file_thumb_url)
-    json.file_url nft.file.url
+    json.file_url nft.file.url.presence || nft.file_thumb_url
   end
 end

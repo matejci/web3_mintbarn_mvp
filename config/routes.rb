@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
 require 'api_constraints'
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  mount Sidekiq::Web, at: '/sidekiq'
+  # mount ActionCable.server => '/chatroom'
+
+  if Rails.env.production?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest(ENV.fetch('SIDEKIQ_USERNAME', 'nftadmin'))) &
+        ActiveSupport::SecurityUtils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(ENV('SIDEKIQ_PASSWORD', 'mynfts123!')))
+    end
+  end
+
   root 'home#index'
 
   namespace :api, path: '', defaults: { format: 'json' } do
