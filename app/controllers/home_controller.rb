@@ -25,5 +25,7 @@ class HomeController < ApplicationController
         ]
       }
     }
+
+    render json: @apple_apps
   end
 end
