@@ -55,7 +55,7 @@ module Solana
         seller_fee_basis_points: nft.seller_fee_basis_points,
         image: nft.file.url,
         animation_url: '',
-        external_url: "www.mynftstats.io/nfts/#{nft.id}",
+        external_url: "www.mintbarn.io/nfts/#{nft.id}",
         attributes: [
           # {
           #   trait_type: 'web',
@@ -68,7 +68,7 @@ module Solana
         ],
         collection: {
           name: ENV['HEROKU_ENV'],
-          family: 'mynftstats.io'
+          family: 'mintbarn.io'
         },
         properties: {
           files: [
