@@ -8,6 +8,6 @@ class ApiConstraints
   end
 
   def matches?(req)
-    req.headers['API-VERSION'] == "api.mynftstats.v#{version}"
+    req.headers['API-VERSION'] == "api.mintbarn.v#{version}"
   end
 end
