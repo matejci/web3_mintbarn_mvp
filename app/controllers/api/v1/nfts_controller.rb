@@ -12,7 +12,7 @@ module Api
       end
 
       def index
-        @collection = Nfts::IndexService.new(page: params[:page], per_page: params[:per_page], wallet: @current_wallet).call
+        @collection = Nfts::IndexService.new(page: params[:page], per_page: params[:per_page], wallet: @current_wallet, chain: @current_chain).call
       end
 
       def show

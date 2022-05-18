@@ -2,10 +2,11 @@
 
 module Nfts
   class IndexService
-    def initialize(page:, per_page:, wallet:)
+    def initialize(page:, per_page:, wallet:, chain:)
       @page = page.presence || 1
       @per_page = (per_page.presence || 10).to_i
       @wallet = wallet
+      @chain = chain
     end
 
     def call
@@ -18,10 +19,10 @@ module Nfts
 
     private
 
-    attr_reader :page, :per_page, :wallet
+    attr_reader :page, :per_page, :wallet, :chain
 
     def nfts
-      data = wallet.nfts.order(:created_at).offset(calculate_offset).limit(per_page)
+      data = wallet.nfts.where(chain_id: chain.id).order(:created_at).offset(calculate_offset).limit(per_page)
 
       { data: data, total_pages: calculate_total_pages }
     end
