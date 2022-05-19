@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web3Mvp</title>
+    <title>MintBarn</title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+
+    <% favicon_path = ENV['HEROKU_ENV'].in?(['local', 'development']) ? 'development' : 'production' %>
+    <%= favicon_link_tag asset_path("favicon-#{favicon_path}.png") %>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
     <%= yield %>
   </body>

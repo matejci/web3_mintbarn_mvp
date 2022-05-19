@@ -1,0 +1,733 @@
+body {
+  background-image: url('background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.logo {
+  position: absolute;
+  top: 45px;
+  left: 585px;
+}
+
+.title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FF3358;
+  position: absolute;
+  top: 56px;
+  left: 637px;
+}
+
+.title_1 {
+  font-weight: 700;
+}
+
+.title_2 {
+  font-weight: 200;
+}
+
+.header_text {
+  position: absolute;
+  height: 127px;
+  left: 585px;
+  top: 157px;
+  width: 512px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 59px;
+  line-height: 66px;
+  color: #000000;
+}
+
+.mint {
+  font-style: italic;
+  color: #FF3358;
+}
+
+.normal_text {
+  position: absolute;
+  width: 593px;
+  height: 60px;
+  left: 585px;
+  top: 314px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 25px;
+  color: #000000;
+}
+
+.iphone {
+  box-sizing: border-box;
+  position: absolute;
+  width: 284px;
+  height: 614px;
+  left: 585px;
+  top: 408px;
+  border: 2px solid #000000;
+  border-radius: 20px;
+}
+
+.body_text {
+  position: absolute;
+  width: 244px;
+  height: 204px;
+  left: 1039px;
+  top: 465px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 52px;
+  color: #000000;
+}
+
+.arrow {
+  position: absolute;
+  left: 1055px;
+  top: 668px;
+}
+
+.body_text2 {
+  position: absolute;
+  width: 205px;
+  height: 57px;
+  left: 1039px;
+  top: 750px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 64px;
+  color: #000000;
+}
+
+.apple_download {
+  position: absolute;
+  left: 1039px;
+  top: 820px;
+}
+
+.social_links {
+  position: absolute;
+  width: 205px;
+  height: 57px;
+  left: 1039px;
+  top: 940px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 64px;
+  text-decoration-line: underline;
+  color: #000000;
+}
+
+@media (max-width: 575.98px) {
+  .logo {
+    top: 65px;
+    left: 40px;
+  }
+
+  .title {
+    top: 80px;
+    left: 90px;
+  }
+
+  .header_text {
+    left: 40px;
+    width: 350px;
+  }
+
+  .normal_text {
+    left: 35px;
+    width: 352px;
+    top: 367px;
+  }
+
+  .iphone {
+    left: 40px;
+    top: 465px;
+    width: 180px;
+    height: 389px;
+  }
+
+  .body_text {
+    left: 275px;
+    width: 125px;
+    font-size: 25px;
+    line-height: 35px;
+    top: 503px;
+  }
+
+  .arrow {
+    left: 275px;
+    top: 622px;
+    height: 50px;
+  }
+
+  .body_text2 {
+    left: 275px;
+    top: 671px;
+    font-size: 13px;
+    width: 125px;
+  }
+
+  .apple_download {
+    left: 275px;
+    top: 730px;
+    width: 110px;
+  }
+
+  .social_links {
+    left: 275px;
+    top: 790px;
+    font-size: 13px;
+    width: 125px;
+  }
+}
+
+@media (min-width : 768px) {
+  .logo {
+    top: 55px;
+    left: 142px;
+  }
+
+  .title {
+    top: 70px;
+    left: 190px;
+  }
+
+  .header_text {
+    left: 142px;
+    width: 438px;
+    font-size: 50px;
+    line-height: 52px;
+    top: 160px;
+  }
+
+  .normal_text {
+    left: 140px;
+    top: 285px;
+    font-size: 14px;
+    line-height: 22px;
+    width: 475px;
+  }
+
+  .iphone {
+    left: 142px;
+    top: 360px;
+    width: 220px;
+    height: 475px;
+  }
+
+  .body_text {
+    left: 492px;
+    width: 125px;
+    font-size: 36px;
+    line-height: 50px;
+    top: 385px;
+    height: 150px;
+  }
+
+  .arrow {
+    left: 492px;
+    top: 552px;
+    height: 50px;
+  }
+
+  .body_text2 {
+    left: 492px;
+    top: 615px;
+    font-size: 15px;
+    width: 125px;
+  }
+
+  .apple_download {
+    left: 492px;
+    top: 686px;
+    width: 140px;
+  }
+
+  .social_links {
+    left: 492px;
+    top: 770px;
+    font-size: 13px;
+    width: 125px;
+  }
+}
+
+/*@media (min-width : 820px) {
+
+}
+*/
+
+@media (min-width : 1024px) {
+
+  .logo {
+    left: 265px;
+  }
+
+  .title {
+    left: 310px;
+  }
+
+  .header_text {
+    left: 265px;
+  }
+
+  .normal_text {
+    left: 260px;
+  }
+
+  .iphone {
+    left: 265px;
+  }
+
+  .body_text {
+    left: 645px;
+  }
+
+  .arrow {
+    left: 645px;
+  }
+
+  .body_text2 {
+    left: 645px;
+  }
+
+  .apple_download {
+    left: 645px;
+  }
+
+  .social_links {
+    left: 645px;
+  }
+}
+
+@media (min-width : 1280px) {
+  .logo {
+    left: 420px;
+  }
+
+  .title {
+    left: 465px;
+  }
+
+  .header_text {
+    left: 420px;
+  }
+
+  .normal_text {
+    left: 420px;
+  }
+
+  .iphone {
+    left: 420px;
+  }
+
+  .body_text {
+    left: 800px;
+  }
+
+  .arrow {
+    left: 800px;
+  }
+
+  .body_text2 {
+    left: 800px;
+  }
+
+  .apple_download {
+    left: 800px;
+  }
+
+  .social_links {
+    left: 800px;
+  }
+}
+
+@media (min-width : 1366px) {
+  .logo {
+    left: 430px;
+  }
+
+  .title {
+    left: 475px;
+  }
+
+  .header_text {
+    left: 430px;
+  }
+
+  .normal_text {
+    left: 430px;
+  }
+
+  .iphone {
+    left: 430px;
+  }
+
+  .body_text {
+    left: 810px;
+  }
+
+  .arrow {
+    left: 810px;
+  }
+
+  .body_text2 {
+    left: 810px;
+  }
+
+  .apple_download {
+    left: 810px;
+  }
+
+  .social_links {
+    left: 810px;
+  }
+}
+
+@media (min-width : 1400px) {
+  .logo {
+    left: 460px;
+  }
+
+  .title {
+    left: 505px;
+  }
+
+  .header_text {
+    left: 460px;
+  }
+
+  .normal_text {
+    left: 460px;
+  }
+
+  .iphone {
+    left: 460px;
+  }
+
+  .body_text {
+    left: 840px;
+  }
+
+  .arrow {
+    left: 840px;
+  }
+
+  .body_text2 {
+    left: 840px;
+  }
+
+  .apple_download {
+    left: 840px;
+  }
+
+  .social_links {
+    left: 840px;
+  }
+}
+
+@media (min-width : 1600px) {
+  .logo {
+    left: 560px;
+  }
+
+  .title {
+    left: 605px;
+  }
+
+  .header_text {
+    left: 560px;
+  }
+
+  .normal_text {
+    left: 560px;
+  }
+
+  .iphone {
+    left: 560px;
+  }
+
+  .body_text {
+    left: 940px;
+  }
+
+  .arrow {
+    left: 940px;
+  }
+
+  .body_text2 {
+    left: 940px;
+  }
+
+  .apple_download {
+    left: 940px;
+  }
+
+  .social_links {
+    left: 940px;
+  }
+}
+
+@media (min-width : 1920px) {
+  .logo {
+    left: 760px;
+  }
+
+  .title {
+    left: 805px;
+  }
+
+  .header_text {
+    left: 760px;
+  }
+
+  .normal_text {
+    left: 760px;
+  }
+
+  .iphone {
+    left: 760px;
+  }
+
+  .body_text {
+    left: 1140px;
+  }
+
+  .arrow {
+    left: 1140px;
+  }
+
+  .body_text2 {
+    left: 1140px;
+  }
+
+  .apple_download {
+    left: 1140px;
+  }
+
+  .social_links {
+    left: 1140px;
+  }
+}
+
+@media (min-width : 2160px) {
+  .logo {
+    left: 960px;
+  }
+
+  .title {
+    left: 1005px;
+  }
+
+  .header_text {
+    left: 960px;
+  }
+
+  .normal_text {
+    left: 960px;
+  }
+
+  .iphone {
+    left: 960px;
+  }
+
+  .body_text {
+    left: 1340px;
+  }
+
+  .arrow {
+    left: 1340px;
+  }
+
+  .body_text2 {
+    left: 1340px;
+  }
+
+  .apple_download {
+    left: 1340px;
+  }
+
+  .social_links {
+    left: 1340px;
+  }
+}
+
+@media (min-width : 2560px) {
+  .logo {
+    left: 1160px;
+  }
+
+  .title {
+    left: 1205px;
+  }
+
+  .header_text {
+    left: 1160px;
+  }
+
+  .normal_text {
+    left: 1160px;
+  }
+
+  .iphone {
+    left: 1160px;
+  }
+
+  .body_text {
+    left: 1540px;
+  }
+
+  .arrow {
+    left: 1540px;
+  }
+
+  .body_text2 {
+    left: 1540px;
+  }
+
+  .apple_download {
+    left: 1540px;
+  }
+
+  .social_links {
+    left: 1540px;
+  }
+}
+
+@media (min-width : 3072px) {
+  .logo {
+    left: 1360px;
+  }
+
+  .title {
+    left: 1405px;
+  }
+
+  .header_text {
+    left: 1360px;
+  }
+
+  .normal_text {
+    left: 1360px;
+  }
+
+  .iphone {
+    left: 1360px;
+  }
+
+  .body_text {
+    left: 1740px;
+  }
+
+  .arrow {
+    left: 1740px;
+  }
+
+  .body_text2 {
+    left: 1740px;
+  }
+
+  .apple_download {
+    left: 1740px;
+  }
+
+  .social_links {
+    left: 1740px;
+  }
+}
+
+@media (min-width : 3440px) {
+  .logo {
+    left: 1560px;
+  }
+
+  .title {
+    left: 1605px;
+  }
+
+  .header_text {
+    left: 1560px;
+  }
+
+  .normal_text {
+    left: 1560px;
+  }
+
+  .iphone {
+    left: 1560px;
+  }
+
+  .body_text {
+    left: 1940px;
+  }
+
+  .arrow {
+    left: 1940px;
+  }
+
+  .body_text2 {
+    left: 1940px;
+  }
+
+  .apple_download {
+    left: 1940px;
+  }
+
+  .social_links {
+    left: 1940px;
+  }
+}
+
+@media (min-width : 3840px) {
+  .logo {
+    left: 1760px;
+  }
+
+  .title {
+    left: 1805px;
+  }
+
+  .header_text {
+    left: 1760px;
+  }
+
+  .normal_text {
+    left: 1760px;
+  }
+
+  .iphone {
+    left: 1760px;
+  }
+
+  .body_text {
+    left: 2140px;
+  }
+
+  .arrow {
+    left: 2140px;
+  }
+
+  .body_text2 {
+    left: 2140px;
+  }
+
+  .apple_download {
+    left: 2140px;
+  }
+
+  .social_links {
+    left: 2140px;
+  }
+}

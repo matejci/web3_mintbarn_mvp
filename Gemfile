@@ -38,7 +38,9 @@ gem 'newrelic_rpm'
 gem 'bootsnap', require: false
 
 # Use Sass to process CSS
-# gem "sassc-rails"
+gem 'sassc-rails'
+
+gem 'bootstrap', '~> 5.1.3'
 
 group :development, :test do
   gem 'byebug'

@@ -3,9 +3,7 @@
 class HomeController < ApplicationController
   skip_before_action :validate_app_token, :set_current_wallet_account, :set_current_chain
 
-  def index
-    render plain: 'My NFT Stats - Coming soon'
-  end
+  def index; end
 
   def aasa
     @apple_apps = {
