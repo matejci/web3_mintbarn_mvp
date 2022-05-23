@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_04_151202) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_23_091125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_04_151202) do
     t.string "list_tx_signature"
     t.string "transfer_tx_signature"
     t.string "file_thumb_url"
+    t.string "list_transfer_tx_signature"
+    t.json "compiled_transaction"
+    t.boolean "client_listing_signed"
+    t.datetime "listed_at"
+    t.datetime "bought_at"
     t.index ["chain_id"], name: "index_nfts_on_chain_id"
     t.index ["creators"], name: "index_nfts_on_creators", using: :gin
     t.index ["share"], name: "index_nfts_on_share", using: :gin

@@ -31,6 +31,11 @@
 #  list_tx_signature           :string
 #  transfer_tx_signature       :string
 #  file_thumb_url              :string
+#  list_transfer_tx_signature  :string
+#  compiled_transaction        :json
+#  client_listing_signed       :boolean
+#  listed_at                   :datetime
+#  bought_at                   :datetime
 #
 class Nft < ApplicationRecord
   belongs_to :wallet_account
@@ -39,7 +44,18 @@ class Nft < ApplicationRecord
   # TODO, file validations!
   has_one_attached :file
 
-  enum status: { created: 0, metadata_uploaded: 1, minted: 2, listed: 3, transfered: 4, failed: 5, imported: 6 }
+  enum status: {
+    created: 0,
+    metadata_uploaded: 1,
+    minted: 2,
+    listed: 3,
+    transfered: 4,
+    failed: 5,
+    imported: 6,
+    waiting_for_signature: 7,
+    company_transfered: 8,
+    bought: 9
+  }
 
   validates :name, presence: true, length: { maximum: 32 }
   validates :symbol, length: { maximum: 10 }

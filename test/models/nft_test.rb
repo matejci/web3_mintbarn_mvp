@@ -29,6 +29,11 @@
 #  list_tx_signature           :string
 #  transfer_tx_signature       :string
 #  file_thumb_url              :string
+#  list_transfer_tx_signature  :string
+#  compiled_transaction        :json
+#  client_listing_signed       :boolean
+#  listed_at                   :datetime
+#  bought_at                   :datetime
 #
 require "test_helper"
 
