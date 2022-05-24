@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Solana
-  class NftMetadataService
+  class NftMetadataService < BaseService
     def initialize(local_nft:)
       @nft = local_nft
     end
@@ -9,8 +9,7 @@ module Solana
     def call
       prepare_metadata
     rescue StandardError => e
-      Bugsnag.notify("Solana::NftMetadataService ERROR - #{e.message}") { |report| report.severity = 'error' }
-      raise ActionController::BadRequest, 'Error when preparing metadata'
+      handle_error(e.message, 'Solana::NftMetadataService', e.message)
     end
 
     private

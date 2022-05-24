@@ -33,7 +33,7 @@ module Cron
                         seller_fee_basis_points: nft.dig('data', 'seller_fee_basis_points'),
                         creators: nft.dig('data', 'creators'),
                         share: nft.dig('data', 'share'),
-                        chain: chain,
+                        chain_id: chain.id,
                         metadata_url: nft.dig('data', 'uri'),
                         metadata: nft['off_chain_data'],
                         primary_sale_happened: nft['primary_sale_happened'],
@@ -43,7 +43,7 @@ module Cron
                         status: :imported,
                         file_thumb_url: nft.dig('off_chain_data', 'image') }
 
-          wallet.nfts.create!(nft_attrs)
+          wallet.nfts.insert(nft_attrs)
         end
       end
 

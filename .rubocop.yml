@@ -123,8 +123,7 @@ Lint/DeprecatedClassMethods:
 
 Lint/MissingSuper:
   Exclude:
-    - 'app/services/nft_port/**/*'
-    - 'app/services/rarible/**/*'
+    - 'app/services/solana/**/*'
 
 Metrics/AbcSize:
   Enabled: false

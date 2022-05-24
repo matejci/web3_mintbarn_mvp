@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Solana
-  class WalletAddressValidatorService
+  class WalletAddressValidatorService < BaseService
     def initialize(address:)
       @address = address
     end
@@ -9,8 +9,7 @@ module Solana
     def call
       validate_address
     rescue StandardError => e
-      Bugsnag.notify("Solana::WalletAddressValidatorService ERROR - #{e.message}") { |report| report.severity = 'error' }
-      raise ActionController::BadRequest, 'Wallet address invalid'
+      handle_error(e.message, 'Solana::WalletAddressValidatorService', 'Wallet address invalid')
     end
 
     private

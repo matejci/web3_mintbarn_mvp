@@ -2,7 +2,7 @@
 
 # Cost: 3 Credits
 module Solana
-  class NftsImportService
+  class NftsImportService < BaseService
     def initialize(wallet_address:, chain_name:)
       @wallet_address = wallet_address
       @chain_name = chain_name
@@ -11,10 +11,7 @@ module Solana
     def call
       import_nfts
     rescue StandardError => e
-      error_msg = e.message
-
-      Bugsnag.notify("Solana::ImportNftService ERROR - #{error_msg}") { |report| report.severity = 'error' }
-      raise ActionController::BadRequest, "Error when importing NFTs: #{error_msg}"
+      handle_error(e.message, 'Solana::ImportNftService', e.message)
     end
 
     private
@@ -24,13 +21,7 @@ module Solana
     def import_nfts
       url = "https://api.blockchainapi.com/v1/solana/wallet/#{chain_name}/#{wallet_address}/nfts"
 
-      req = Faraday.new.get(url, nil, { 'content-type': 'application/json', APIKeyID: ENV['BLOCKCHAIN_API_KEY_ID'], APISecretKey: ENV['BLOCKCHAIN_SECRET_KEY'] })
-
-      parsed_response = JSON.parse(req.body)
-
-      return parsed_response if req.success?
-
-      raise ActionController::BadRequest, parsed_response['error_message']
+      handle_http_request(url: url, method: 'get', payload: nil)
     end
   end
 end

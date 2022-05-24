@@ -2,7 +2,7 @@
 
 # Cost: 5 Credits
 module Solana
-  class MintNftService
+  class MintNftService < BaseService
     def initialize(local_nft:, metadata_url:, chain_name:)
       @local_nft = local_nft
       @metadata_url = metadata_url
@@ -12,10 +12,7 @@ module Solana
     def call
       mint_nft
     rescue StandardError => e
-      error_msg = e.message
-
-      Bugsnag.notify("Solana::MintNftService ERROR - #{error_msg}") { |report| report.severity = 'error' }
-      raise ActionController::BadRequest, "Error when minting NFT: #{error_msg}"
+      handle_error(e.message, 'Solana::MintNftService', e.message)
     end
 
     private
@@ -42,13 +39,7 @@ module Solana
         network: chain_name
       }
 
-      req = Faraday.new.post(url, payload.to_json, { 'content-type': 'application/json', APIKeyID: ENV['BLOCKCHAIN_API_KEY_ID'], APISecretKey: ENV['BLOCKCHAIN_SECRET_KEY'] })
-
-      parsed_response = JSON.parse(req.body)
-
-      return parsed_response if req.success?
-
-      raise ActionController::BadRequest, parsed_response['error_message']
+      handle_http_request(url: url, method: 'post', payload: payload.to_json)
     end
   end
 end
