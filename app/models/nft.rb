@@ -31,9 +31,6 @@
 #  list_tx_signature           :string
 #  transfer_tx_signature       :string
 #  file_thumb_url              :string
-#  list_transfer_tx_signature  :string
-#  compiled_transaction        :json
-#  client_listing_signed       :boolean
 #  listed_at                   :datetime
 #  bought_at                   :datetime
 #
@@ -49,12 +46,9 @@ class Nft < ApplicationRecord
     metadata_uploaded: 1,
     minted: 2,
     listed: 3,
-    transfered: 4,
+    transferred: 4,
     failed: 5,
-    imported: 6,
-    waiting_for_signature: 7,
-    company_transfered: 8,
-    bought: 9
+    imported: 6
   }
 
   validates :name, presence: true, length: { maximum: 32 }
@@ -62,5 +56,5 @@ class Nft < ApplicationRecord
   validates :description, length: { maximum: 2000 }
   validates :seller_fee_basis_points, numericality: { in: 0..10_000 }
   validates :creators, :share, presence: true
-  validates :price_in_lamports, numericality: { in: 1_000..18_446_744_073_709_551_615, allow_blank: true }
+  validates :price_in_lamports, presence: true, numericality: { in: 1_000..18_446_744_073_709_551_615 }
 end

@@ -8,6 +8,7 @@ module Nfts
     def initialize(params:, chain:, wallet:)
       @name = params[:name]
       @file = params[:file]
+      @price = params[:price_in_lamports]
       @symbol = params[:symbol].presence || ''
       @description = params[:description]
       @is_mutable = params[:is_mutable]
@@ -23,7 +24,7 @@ module Nfts
       # TODO, check for available credits for company wallet address before proceeding
       validate_params
       local_nft = create_local_nft
-      mint_and_transfer(local_nft.id)
+      mint_and_list(local_nft.id)
       local_nft
     rescue StandardError => e
       error_msg = e.message
@@ -55,6 +56,7 @@ module Nfts
 
     def create_local_nft
       nft = wallet.nfts.create!(name: name,
+                                price_in_lamports: price,
                                 symbol: symbol,
                                 description: description,
                                 is_mutable: is_mutable,
@@ -67,8 +69,8 @@ module Nfts
       nft
     end
 
-    def mint_and_transfer(nft_id)
-      NftMintAndTransferJob.perform_later(nft_id: nft_id, chain_name: chain.name.downcase)
+    def mint_and_list(nft_id)
+      NftMintAndListJob.perform_later(nft_id: nft_id, chain_name: chain.name.downcase)
     end
   end
 end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class NftMintAndTransferJob < ApplicationJob
-  queue_as :default
-  sidekiq_options retry: 5
+class NftMintAndListJob < ApplicationJob
+  queue_as :mint_and_list
+  sidekiq_options retry: 3
 
   def perform(nft_id:, chain_name:)
-    mint_and_transfer(nft_id, chain_name)
+    mint_and_list(nft_id, chain_name)
   rescue StandardError => e
     Bugsnag.notify(e) { |report| report.severity = 'error' }
     raise e
@@ -13,13 +13,13 @@ class NftMintAndTransferJob < ApplicationJob
 
   private
 
-  def mint_and_transfer(nft_id, chain_name)
+  def mint_and_list(nft_id, chain_name)
     nft = Nft.find(nft_id)
 
     nft.update!(file_thumb_url: nft.file.variant(resize_to_limit: [250, 250]).processed.url)
 
     mint(nft, chain_name) unless nft.status == 'minted'
-    transfer(nft, chain_name)
+    list(nft, chain_name)
   end
 
   def mint(nft, chain_name)
@@ -40,9 +40,8 @@ class NftMintAndTransferJob < ApplicationJob
     nft.update!(nft_attrs)
   end
 
-  def transfer(nft, chain_name)
-    transfer_response = Solana::TransferNftService.new(recipient: nft.mint_to_public_key, token_address: nft.mint_address, chain_name: chain_name).call
-
-    nft.update!(status: :transfered, transfer_tx_signature: transfer_response['transaction_signature'])
+  def list(nft, chain_name)
+    list_response = Solana::ListNftService.new(chain_name: chain_name, mint_address: nft.mint_address, price: nft.price_in_lamports).call
+    nft.update!(list_tx_signature: list_response['transaction_signature'], status: :listed, listed_at: Time.current)
   end
 end
