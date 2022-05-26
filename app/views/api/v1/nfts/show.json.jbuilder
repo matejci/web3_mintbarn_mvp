@@ -14,6 +14,7 @@ json.data do
                 :creators,
                 :share,
                 :created_at,
-                :file_thumb_url)
+                :file_thumb_url,
+                :magic_eden_url)
   json.file_url @nft.file.url
 end

@@ -23,6 +23,9 @@ Performance:
 Style/AndOr:
   Enabled: true
 
+Style/SingleArgumentDig:
+  Enabled: false
+
 Layout/AccessModifierIndentation:
   Enabled: false
 

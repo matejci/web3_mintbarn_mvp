@@ -33,6 +33,7 @@
 #  file_thumb_url              :string
 #  listed_at                   :datetime
 #  bought_at                   :datetime
+#  magic_eden_url              :string
 #
 class Nft < ApplicationRecord
   belongs_to :wallet_account

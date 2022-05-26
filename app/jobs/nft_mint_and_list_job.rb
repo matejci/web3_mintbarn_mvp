@@ -23,11 +23,11 @@ class NftMintAndListJob < ApplicationJob
   end
 
   def mint(nft, chain_name)
-    metadata_url = Solana::NftMetadataService.new(local_nft: nft).call
-    mint_response = Solana::MintNftService.new(local_nft: nft, metadata_url: metadata_url, chain_name: chain_name).call
+    Solana::NftMetadataService.new(local_nft: nft).call if nft.status != 'metadata_uploaded'
+
+    mint_response = Solana::MintNftService.new(local_nft: nft, metadata_url: nft.metadata_url, chain_name: chain_name).call
 
     nft_attrs = {
-      metadata_url: metadata_url,
       explorer_url: mint_response['explorer_url'],
       mint_address: mint_response['mint'],
       mint_secret_recovery_phrase: mint_response['mint_secret_recovery_phrase'],
@@ -42,6 +42,9 @@ class NftMintAndListJob < ApplicationJob
 
   def list(nft, chain_name)
     list_response = Solana::ListNftService.new(chain_name: chain_name, mint_address: nft.mint_address, price: nft.price_in_lamports).call
-    nft.update!(list_tx_signature: list_response['transaction_signature'], status: :listed, listed_at: Time.current)
+    nft.update!(list_tx_signature: list_response['transaction_signature'],
+                status: :listed,
+                listed_at: Time.current,
+                magic_eden_url: list_response.dig('nft_listing'))
   end
 end

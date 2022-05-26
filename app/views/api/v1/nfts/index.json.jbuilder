@@ -17,7 +17,8 @@ json.data do
                   :share,
                   :status,
                   :created_at,
-                  :file_thumb_url)
+                  :file_thumb_url,
+                  :magic_eden_url)
     json.file_url nft.file.url.presence || nft.file_thumb_url
   end
 end

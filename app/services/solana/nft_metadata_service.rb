@@ -25,13 +25,11 @@ module Solana
       file_upload = aws.put_object(acl: 'public-read', bucket: bucket, key: key, body: body.to_json) # TODO, handle upload errors
 
       if file_upload.successful?
-        nft.update!(metadata: body, status: :metadata_uploaded)
+        nft.update!(metadata: body, status: :metadata_uploaded, metadata_url: "https://#{bucket}.s3.us-west-1.amazonaws.com/#{key}")
       else
         nft.update!(status: :failed)
         raise ActionController::BadRequest, "Metadata upload error: #{file_upload.error}"
       end
-
-      "https://#{bucket}.s3.us-west-1.amazonaws.com/#{key}"
     end
 
     def connection_hash
