@@ -25,7 +25,7 @@ class NftMintAndListJob < ApplicationJob
   def mint(nft, chain_name)
     Solana::NftMetadataService.new(local_nft: nft).call if nft.status != 'metadata_uploaded'
 
-    mint_response = Solana::MintNftService.new(local_nft: nft, metadata_url: nft.metadata_url, chain_name: chain_name).call
+    mint_response = Solana::MintNftService.new(local_nft: nft, chain_name: chain_name).call
 
     nft_attrs = {
       explorer_url: mint_response['explorer_url'],

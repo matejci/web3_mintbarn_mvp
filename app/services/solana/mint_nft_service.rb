@@ -3,9 +3,8 @@
 # Cost: 5 Credits
 module Solana
   class MintNftService < BaseService
-    def initialize(local_nft:, metadata_url:, chain_name:)
+    def initialize(local_nft:, chain_name:)
       @local_nft = local_nft
-      @metadata_url = metadata_url
       @chain_name = chain_name
     end
 
@@ -17,7 +16,7 @@ module Solana
 
     private
 
-    attr_reader :local_nft, :metadata_url, :chain_name
+    attr_reader :local_nft, :chain_name
 
     def mint_nft
       url = 'https://api.blockchainapi.com/v1/solana/nft'
@@ -28,8 +27,8 @@ module Solana
         },
         nft_name: local_nft.name,
         nft_symbol: local_nft.symbol,
-        nft_url: metadata_url,
-        nft_upload_method: 'LINK',
+        uri: local_nft.metadata_url,
+        upload_method: 'URI',
         is_mutable: local_nft.is_mutable,
         is_master_edition: local_nft.is_master_edition,
         seller_fee_basis_points: local_nft.seller_fee_basis_points,

@@ -34,6 +34,7 @@
 #  listed_at                   :datetime
 #  bought_at                   :datetime
 #  magic_eden_url              :string
+#  first_purchase              :json
 #
 class Nft < ApplicationRecord
   belongs_to :wallet_account
@@ -49,7 +50,9 @@ class Nft < ApplicationRecord
     listed: 3,
     transferred: 4,
     failed: 5,
-    imported: 6
+    imported: 6,
+    bought: 7,
+    funds_transferred: 8
   }
 
   validates :name, presence: true, length: { maximum: 32 }

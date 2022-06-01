@@ -32,6 +32,7 @@
 #  listed_at                   :datetime
 #  bought_at                   :datetime
 #  magic_eden_url              :string
+#  first_purchase              :json
 #
 require "test_helper"
 

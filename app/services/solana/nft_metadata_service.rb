@@ -64,7 +64,7 @@ module Solana
           # }
         ],
         collection: {
-          name: ENV['HEROKU_ENV'],
+          name: ENV.fetch('MAGIC_EDEN_COLLECTION', 'MintBarn'),
           family: 'mintbarn.io'
         },
         properties: {

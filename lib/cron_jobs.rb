@@ -9,5 +9,9 @@ module CronJobs
     def import_nfts!
       Cron::Nfts::ImportNftsJob.perform_later
     end
+
+    def check_nft_activities!
+      Cron::Nfts::ActivityChecksJob.perform_later
+    end
   end
 end
