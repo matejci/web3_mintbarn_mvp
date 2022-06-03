@@ -5,6 +5,7 @@ class TransferFundsJob < ApplicationJob
   sidekiq_options retry: 3
 
   def perform(nft_id)
+    validate_balance
     transfer_funds(nft_id)
   rescue StandardError => e
     Bugsnag.notify(e) { |report| report.severity = 'error' }
@@ -12,6 +13,10 @@ class TransferFundsJob < ApplicationJob
   end
 
   private
+
+  def validate_balance
+    BalanceValidationService.new(type: 'transfer').call
+  end
 
   def transfer_funds(nft_id)
     nft = Nft.find(nft_id)

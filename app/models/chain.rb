@@ -18,4 +18,10 @@ class Chain < ApplicationRecord
   has_many :contracts, dependent: :nullify
 
   validates :name, presence: true, uniqueness: true
+
+  def self.devnet
+    Rails.cache.fetch('devnet_chain') do
+      where(name: 'Devnet').first
+    end
+  end
 end

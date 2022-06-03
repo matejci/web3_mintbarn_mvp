@@ -14,3 +14,8 @@ desc 'NFT activity checks'
 task nft_activity_checks: :environment do
   CronJobs.check_nft_activities!
 end
+
+desc 'Estimate Mint fees'
+task estimate_mint_fees: :environment do
+  CronJobs.estimate_mint_fees!
+end

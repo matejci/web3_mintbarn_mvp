@@ -21,8 +21,8 @@ module Nfts
     end
 
     def call
-      # TODO, check for available credits for company wallet address before proceeding
       validate_params
+      validate_balance
       local_nft = create_local_nft
       mint_and_list(local_nft.id)
       local_nft
@@ -45,6 +45,10 @@ module Nfts
       raise ActionController::BadRequest, 'Length of the lists must be between 1 and 5' if share.empty? || share.size > 4
 
       validate_share
+    end
+
+    def validate_balance
+      BalanceValidationService.new(type: 'mint').call
     end
 
     def validate_share

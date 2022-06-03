@@ -3,8 +3,6 @@
 # Cost: 2 Credits
 module Solana
   class TransferFundsService < BaseService
-    SOLS_IN_LAMPORT = 10.000000001
-
     def initialize(nft:)
       @nft = nft
     end

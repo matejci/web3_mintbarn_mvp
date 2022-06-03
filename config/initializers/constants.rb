@@ -12,3 +12,5 @@ KNOWN_USER_AGENTS = ['Googlebot',
                      'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
                      'facebookexternalhit/1.1',
                      'PayPal'].freeze
+
+SOLS_IN_LAMPORT = 0.000000001

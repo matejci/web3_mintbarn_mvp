@@ -13,5 +13,9 @@ module CronJobs
     def check_nft_activities!
       Cron::Nfts::ActivityChecksJob.perform_later
     end
+
+    def estimate_mint_fees!
+      Cron::Nfts::EstimateMintFeesJob.perform_later
+    end
   end
 end

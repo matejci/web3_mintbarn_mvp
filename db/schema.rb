@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_26_161420) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_01_183937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_26_161420) do
     t.string "public_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "min_mint_lamports_balance", default: 0
+    t.bigint "min_transfer_lamports_balance", default: 0
     t.index ["app_id"], name: "index_apps_on_app_id"
   end
 
