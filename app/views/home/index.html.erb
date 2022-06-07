@@ -3,25 +3,20 @@
     <div class="row">
       <div class="col-4">
         <%= image_tag('logo.png', alt: 'logo', class: 'logo', size: '48x48') %>
+        <%= image_tag('hamburger.jpg', alt: 'menu', class: 'hamburger', size: '48x48') %>
       </div>
       <div class="col-4 title">
-        <span class="title_1">mint</span><span class="title_2">barn</span>
+        <span class="title_txt1">mint</span><span class="title_txt2">barn</span>
+      </div>
+      <div class="col-4 links">
+        <%= link_to('Twitter', 'https://twitter.com/MintBarn', class: 'twitter_link links_text') %>
+        <%= link_to('Discord', 'http://discord.gg/TmrdDVjVfM', class: 'discord_link links_text') %>
+        <%= link_to('Terms', '', class: 'terms_link links_text') %>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="header_text">
-          The fastest way to <span class="mint">mint</span> on Solana
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="normal_text">
-          Mintbarn is built for creators to express their art through NFTs. We have created the easiest way for creators to mint an NFT on Solana.
-        </div>
-      </div>
-    </div>
+
+
+
     <div class="row">
       <div class="col-6">
         <div class="iphone_img">
@@ -29,19 +24,10 @@
         </div>
       </div>
       <div class="col-6">
+
         <div class="row">
           <div class="col-12">
-            <span class="body_text">Fast. Secure. Fun.</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <%= image_tag('arrow.png', alt: 'arrow', class: 'arrow') %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <span class="body_text2">Mint in seconds.</span>
+            <span class="text">Turn your photos into an NFT on Solana.</span>
           </div>
         </div>
         <div class="row">
@@ -49,13 +35,6 @@
             <%= link_to('https://apps.apple.com/app/id1615549175') do %>
               <%= image_tag('apple_download.png', alt: 'apple_download', class: 'apple_download') %>
             <% end %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="social_links">
-              <%= link_to('Twitter', 'https://twitter.com/MintBarn') %> / <%= link_to('Discord', '') %>
-            </div>
           </div>
         </div>
       </div>
