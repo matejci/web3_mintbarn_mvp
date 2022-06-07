@@ -44,4 +44,6 @@ Rails.application.routes.draw do
   # apple universal links
   get '/apple-app-site-association', to: 'home#aasa'
   get '/.well-known/apple-app-site-association', to: 'home#aasa'
+
+  get '/terms', to: 'home#terms'
 end

@@ -26,4 +26,6 @@ class HomeController < ApplicationController
 
     render json: @apple_apps
   end
+
+  def terms; end
 end

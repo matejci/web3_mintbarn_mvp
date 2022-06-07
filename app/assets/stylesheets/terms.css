@@ -1,0 +1,50 @@
+h1 {
+  text-align: center;
+  top: 50px;
+  position: relative;
+}
+
+#terms_main {
+  color: white;
+}
+
+.last-updated {
+  font-size: 12px;
+  color: grey;
+  text-align: center;
+  position: relative;
+  top: 45px;
+}
+
+h2 {
+  text-align: center;
+  position: relative;
+  top: 60px;
+  font-size: 30px;
+}
+
+.terms_regular_text {
+  font-size: 12px;
+  position: relative;
+  top: 80px;
+  text-align: justify;
+}
+
+.section_header {
+  font-size: 16px;
+  position: relative;
+  top: 80px;
+  font-weight: bold;
+}
+
+.nested_section_header {
+  font-size: 14px;
+  position: relative;
+  top: 80px;
+  left: 40px;
+  font-weight: bold;
+}
+
+.nested {
+	left: 40px;
+}

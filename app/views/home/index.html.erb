@@ -11,12 +11,9 @@
       <div class="col-4 links">
         <%= link_to('Twitter', 'https://twitter.com/MintBarn', class: 'twitter_link links_text') %>
         <%= link_to('Discord', 'http://discord.gg/TmrdDVjVfM', class: 'discord_link links_text') %>
-        <%= link_to('Terms', '', class: 'terms_link links_text') %>
+        <%= link_to('Terms', terms_path, class: 'terms_link links_text') %>
       </div>
     </div>
-
-
-
     <div class="row">
       <div class="col-6">
         <div class="iphone_img">
@@ -24,7 +21,6 @@
         </div>
       </div>
       <div class="col-6">
-
         <div class="row">
           <div class="col-12">
             <span class="text">Turn your photos into an NFT on Solana.</span>
@@ -33,7 +29,7 @@
         <div class="row">
           <div class="col-12">
             <%= link_to('https://apps.apple.com/app/id1615549175') do %>
-              <%= image_tag('apple_download.png', alt: 'apple_download', class: 'apple_download') %>
+            <%= image_tag('apple_download.png', alt: 'apple_download', class: 'apple_download') %>
             <% end %>
           </div>
         </div>
