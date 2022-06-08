@@ -334,7 +334,41 @@ body {
 
 @media (min-width : 1366px) {}
 
-@media (min-width : 1400px) {}
+@media (min-width : 1440px) {
+  .twitter_link {
+    left: 1100px;
+  }
+
+  .discord_link {
+    left: 1200px;
+  }
+
+  .terms_link {
+    left: 1300px;
+  }
+
+  .iphone {
+    left: 320px;
+    width: 300px;
+    height: auto;
+    top: 190px;
+  }
+
+  .text {
+    left: 690px;
+    font-size: 40px;
+    line-height: 60px;
+    width: 451px;
+    top: 362px;
+  }
+
+  .apple_download {
+    left: 690px;
+    width: 245px;
+    height: auto;
+    top: 527px;
+  }
+}
 
 @media (min-width : 1600px) {
   .twitter_link {
