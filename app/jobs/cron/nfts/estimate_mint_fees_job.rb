@@ -7,8 +7,6 @@ module Cron
       sidekiq_options retry: 3
 
       def perform
-        return unless (Time.current.hour % 4).zero?
-
         estimate_mint_fees
       rescue StandardError => e
         Bugsnag.notify(e) { |report| report.severity = 'error' }
@@ -50,7 +48,7 @@ module Cron
           status: :minted
         }
 
-        nft.update!(nft_attrs)
+        nft.update_columns(nft_attrs)
       end
 
       def list(nft)

@@ -16,43 +16,61 @@ module Cron
       private
 
       def import_nfts(wallet_address)
-        wallet = WalletAccount.includes(:nfts).find_by!(address: wallet_address)
-        chain_name = resolve_chain
-        chain = Chain.find_by(name: chain_name)
+        wallet = WalletAccount.find_by!(address: wallet_address)
+        keep_mint_addresses = []
 
-        response = Solana::NftsImportService.new(wallet_address: wallet_address, chain_name: chain_name.downcase).call
+        response = Solana::NftsImportService.new(wallet_address: wallet_address, chain_name: chain.last.downcase).call
 
         response['nfts_metadata'].each do |nft|
-          local_nft = wallet.nfts.find { |item| item.mint_address == nft['mint'] }
+          mint_address = nft['mint']
+          keep_mint_addresses << mint_address
 
-          next if local_nft
+          local_nft = Nft.find_by(mint_address: mint_address)
 
-          nft_attrs = { name: nft.dig('data', 'name'),
-                        symbol: nft.dig('data', 'symbol'),
-                        is_mutable: nft['is_mutable'],
-                        seller_fee_basis_points: nft.dig('data', 'seller_fee_basis_points'),
-                        creators: nft.dig('data', 'creators'),
-                        share: nft.dig('data', 'share'),
-                        chain_id: chain.id,
-                        metadata_url: nft.dig('data', 'uri'),
-                        metadata: nft['off_chain_data'],
-                        primary_sale_happened: nft['primary_sale_happened'],
-                        explorer_url: nft['explorer_url'],
-                        mint_address: nft['mint'],
-                        update_authority: nft['update_authority'],
-                        status: :imported,
-                        file_thumb_url: nft.dig('off_chain_data', 'image') }
-
-          wallet.nfts.insert(nft_attrs)
+          if local_nft
+            local_nft.update_columns(status: :minted, wallet_account_id: wallet.id)
+          else
+            create_new_nft(nft, wallet, mint_address)
+          end
         end
+
+        update_nfts = wallet.nfts.where.not(status: :listed).where.not(mint_address: keep_mint_addresses)
+        update_nfts.each { |nft| nft.update_columns(status: :archived, wallet_account_id: nil) }
       end
 
-      def resolve_chain
-        case ENV.fetch('HEROKU_ENV', '')
-        when 'local', 'development'
-          'Devnet'
-        else
-          'Mainnet-beta'
+      def create_new_nft(nft, wallet, mint_address)
+        nft_attrs = { name: nft.dig('data', 'name'),
+                      symbol: nft.dig('data', 'symbol'),
+                      description: nft.dig('off_chain_data', 'description'),
+                      is_mutable: nft['is_mutable'],
+                      seller_fee_basis_points: nft.dig('data', 'seller_fee_basis_points'),
+                      creators: nft.dig('data', 'creators'),
+                      share: nft.dig('data', 'share'),
+                      chain_id: chain.first,
+                      metadata_url: nft.dig('data', 'uri'),
+                      metadata: nft['off_chain_data'],
+                      primary_sale_happened: nft['primary_sale_happened'],
+                      explorer_url: nft['explorer_url'],
+                      mint_address: mint_address,
+                      update_authority: nft['update_authority'],
+                      status: :minted,
+                      file_thumb_url: nft.dig('off_chain_data', 'image'),
+                      mint_to_public_key: nft.dig('data', 'creators').first,
+                      magic_eden_url: chain.last == 'Mainnet-beta' ? "https://magiceden.io/item-details/#{mint_address}" : nil }
+
+        wallet.nfts.insert(nft_attrs)
+      end
+
+      def chain
+        @chain ||= begin
+          chain_name = case ENV.fetch('HEROKU_ENV', '')
+                       when 'local', 'development'
+                         'Devnet'
+                       else
+                         'Mainnet-beta'
+          end
+
+          [Chain.find_by(name: chain_name).id, chain_name]
         end
       end
     end

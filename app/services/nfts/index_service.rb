@@ -22,7 +22,7 @@ module Nfts
     attr_reader :page, :per_page, :wallet, :chain
 
     def nfts
-      data = wallet.nfts.where(chain_id: chain.id).order(:created_at).offset(calculate_offset).limit(per_page)
+      data = wallet.nfts.where(chain_id: chain.id).where.not(status: :archived).order(:created_at).offset(calculate_offset).limit(per_page)
 
       { data: data, total_pages: calculate_total_pages }
     end

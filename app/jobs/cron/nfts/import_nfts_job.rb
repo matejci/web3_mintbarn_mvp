@@ -18,7 +18,7 @@ module Cron
       private
 
       def process_import_nfts_jobs
-        WalletAccount.find_each do |wallet|
+        WalletAccount.where.not(address: ENV['COMPANY_PUBLIC_KEY']).find_each do |wallet|
           Cron::Nfts::ImportWalletNftsJob.perform_later(wallet.address)
         end
       end

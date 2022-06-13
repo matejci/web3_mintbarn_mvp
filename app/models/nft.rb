@@ -50,9 +50,9 @@ class Nft < ApplicationRecord
     listed: 3,
     transferred: 4,
     failed: 5,
-    imported: 6,
-    bought: 7,
-    funds_transferred: 8
+    bought: 6,
+    funds_transferred: 7,
+    archived: 8
   }
 
   validates :name, presence: true, length: { maximum: 32 }
