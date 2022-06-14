@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_01_183937) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_14_125629) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_183937) do
     t.json "first_purchase"
     t.index ["chain_id"], name: "index_nfts_on_chain_id"
     t.index ["creators"], name: "index_nfts_on_creators", using: :gin
+    t.index ["mint_address"], name: "index_nfts_on_mint_address"
     t.index ["share"], name: "index_nfts_on_share", using: :gin
     t.index ["wallet_account_id"], name: "index_nfts_on_wallet_account_id"
   end
