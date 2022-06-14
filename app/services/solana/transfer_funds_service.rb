@@ -21,7 +21,7 @@ module Solana
       url = 'https://api.blockchainapi.com/v1/solana/wallet/transfer'
 
       payload = {
-        recipient_address: nft.mint_to_public_key,
+        recipient_address: nft.wallet_account&.address,
         wallet: {
           b58_private_key: ENV['B58_COMPANY_PRIVATE_KEY']
         },

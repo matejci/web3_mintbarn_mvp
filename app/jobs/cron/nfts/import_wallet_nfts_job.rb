@@ -34,7 +34,7 @@ module Cron
           end
         end
 
-        update_nfts = wallet.nfts.where.not(status: :listed).where.not(mint_address: keep_mint_addresses)
+        update_nfts = wallet.nfts.where.not(mint_address: keep_mint_addresses)
         update_nfts.each { |nft| nft.update_columns(status: :archived, wallet_account_id: nil) }
       end
 

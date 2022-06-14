@@ -19,7 +19,7 @@ class TransferFundsJob < ApplicationJob
   end
 
   def transfer_funds(nft_id)
-    nft = Nft.find(nft_id)
+    nft = Nft.includes(:wallet_account, :chain).find(nft_id)
 
     transfer_response = Solana::TransferFundsService.new(nft: nft).call
 
